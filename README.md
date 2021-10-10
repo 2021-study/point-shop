@@ -15,6 +15,7 @@
 - forking workflow   ( 링크 : [Forking Workflow](https://gmlwjd9405.github.io/2017/10/28/how-to-collaborate-on-GitHub-2.html))
 
 # 코딩 컨벤션
-Google Coding Convention 을 참고한다 ( 링크 : [Google Coding Convention](https://google.github.io/styleguide/javaguide.html))
+- Google Coding Convention 을 참고한다 ( 링크 : [Google Coding Convention](https://google.github.io/styleguide/javaguide.html))
 
-# 슬랙 Webhok 사용 
+# 슬랙 
+- Webhok 기능을 통한 연동
