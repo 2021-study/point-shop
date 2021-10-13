@@ -9,11 +9,10 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 public class CryptoConverterTest {
 
-
     @Test
     @DisplayName("암호화 모듈이 AES 알고리즘으로 부호화/복호화 되어야 한다.")
-    public void aesCryptoTest(){
-        //평문
+    public void aesCryptoTest() {
+        // 평문
         String normalText = "암호화_텍스트";
         String encryptedText = CryptoConvertUtil.encrypt(normalText);
         String decryptedText = CryptoConvertUtil.decrypt(encryptedText);
@@ -24,5 +23,4 @@ public class CryptoConverterTest {
 
         assertEquals(normalText, decryptedText);
     }
-
 }

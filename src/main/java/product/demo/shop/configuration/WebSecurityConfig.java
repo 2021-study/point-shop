@@ -11,18 +11,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-            .authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated()
-            .and()
-                .csrf().ignoringAntMatchers("/h2-console/**")
-            .and()
-                .formLogin().permitAll()
-            .and()
-                .logout().permitAll()
-            .and()
-                .headers().addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy","script-src 'self'")).frameOptions().disable()
-            ;
+        http.authorizeRequests()
+                .antMatchers("/h2-console/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .csrf()
+                .ignoringAntMatchers("/h2-console/**")
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
+                .headers()
+                .addHeaderWriter(
+                        new StaticHeadersWriter("X-Content-Security-Policy", "script-src 'self'"))
+                .frameOptions()
+                .disable();
     }
 }

@@ -26,7 +26,7 @@ public class DataBaseConfiguration {
     private String driverClassName;
 
     @Bean
-    public DataSource defaultDataSource(){
+    public DataSource defaultDataSource() {
         var dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(url);
         dataSourceBuilder.username(CryptoConvertUtil.decrypt(encryptedUsername));
@@ -35,18 +35,18 @@ public class DataBaseConfiguration {
         return dataSourceBuilder.build();
     }
 
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
-//        var em = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(defaultDataSource());
-//        em.setPackagesToScan("product.demo.shop");
-//        return em;
-//    }
-//
-//    @Bean
-//    public PlatformTransactionManager transactionManager() {
-//        var transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
-//        return transactionManager;
-//    }
+    //    @Bean
+    //    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+    //        var em = new LocalContainerEntityManagerFactoryBean();
+    //        em.setDataSource(defaultDataSource());
+    //        em.setPackagesToScan("product.demo.shop");
+    //        return em;
+    //    }
+    //
+    //    @Bean
+    //    public PlatformTransactionManager transactionManager() {
+    //        var transactionManager = new JpaTransactionManager();
+    //        transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+    //        return transactionManager;
+    //    }
 }

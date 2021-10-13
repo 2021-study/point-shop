@@ -9,7 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class CryptoConvertUtil {
 
     public static final String CRYPTO_ALGORITHM = "AES";
-    public static final String KEY = "cG9pbnRzaG9wcG9p"; //KEY는 16, 24, 32 Byte이어야 한다.
+    public static final String KEY = "cG9pbnRzaG9wcG9p"; // KEY는 16, 24, 32 Byte이어야 한다.
 
     public static String encrypt(String pwd) {
         String encodedPwd = "";
@@ -25,7 +25,6 @@ public class CryptoConvertUtil {
             e.printStackTrace();
         }
         return encodedPwd;
-
     }
 
     public static String decrypt(String encryptedData) {
