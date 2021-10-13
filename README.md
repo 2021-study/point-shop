@@ -32,3 +32,31 @@
 ## 슬랙
 
 * Webhok 기능을 통한 연동
+
+
+## Docker
+
+* 도커 컨테이너 실행하기
+```bash
+$ cd $PROJECT_DIR/docker
+$ docker-compose up -d
+```
+
+* 컨테이너 종료
+  * Volumn을 초기화 하지 않으면 남은 데이터는 저장됨
+
+```bash
+$ docker-compose down
+```
+* 볼륨 마운트까지 제거시 ```-v``` 옵션 추가
+  * 이러면 DB에 저장된 값도 날라감.
+
+```bash
+$ docker-compose down -v
+```
+
+## mysql
+* 로컬에 Mysql 서버를 이용 하지 않을 분들은 docker Container를 사용해주세요
+* 포트는 mysql 로컬 포트는 3306 입니다.
+* 로컬에 Mysql 서버를 이미 쓰시는 분은 3306포트가 선점되어 있어서 Container가 정상적으로 뜨지 않을 수 있습니다.
+  * application.yml이나 docker-compose 스크립트의 host port를 바꾸지 마시고, 둘중 하나를 사용하시는걸 권장드립니다. 
