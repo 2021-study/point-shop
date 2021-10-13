@@ -1,1 +1,5 @@
-
+spring:
+  application:
+    name: point-shop
+  main:
+    allow-bean-definition-overriding: true

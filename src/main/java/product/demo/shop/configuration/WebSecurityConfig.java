@@ -1,4 +1,4 @@
-package product.demo.shop.security.config;
+package product.demo.shop.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
