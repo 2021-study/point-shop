@@ -59,5 +59,4 @@ $ docker-compose down -v
 * 로컬에 Mysql 서버를 이용 하지 않을 분들은 docker Container를 사용해주세요
 * 포트는 mysql 로컬 포트는 3306 입니다.
 * 로컬에 Mysql 서버를 이미 쓰시는 분은 3306포트가 선점되어 있어서 Container가 정상적으로 뜨지 않을 수 있습니다.
-  * application.yml이나 docker-compose 스크립트의 host port를 바꾸지 마시고, 둘중 하나를 사용하시는걸 권장드립니다. 
-  * 수정했습니다.
+  * application.yml이나 docker-compose 스크립트의 host port를 바꾸지 마시고, 둘중 하나를 사용하시는걸 권장드립니다.
