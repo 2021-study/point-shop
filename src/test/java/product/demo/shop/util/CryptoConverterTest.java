@@ -1,6 +1,6 @@
 package product.demo.shop.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,7 @@ public class CryptoConverterTest {
         System.out.println("암호문 : " + encryptedText);
         System.out.println("해독문 : " + decryptedText);
 
-        assertEquals(normalText, decryptedText);
+        // assertJ
+        assertThat(decryptedText).isEqualTo(normalText);
     }
 }
