@@ -1,14 +1,18 @@
-
 spring:
-  h2:
-    console:
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:shop
-#    url: jdbc:h2:file:./shop;AUTO_SERVER=TRUE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/shopdb
+    # DB 접근 계정 정보 암호화
+    username: iCWwblRPZ/AobGpU0sGzSA==
+    password: nYfhzPYlkFURs4ly/G+PGg==
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
 
 server:
   port: 8077
