@@ -21,8 +21,7 @@ public class CryptoConvertUtil {
             encodedPwd = Base64.getEncoder().encodeToString(encVal);
 
         } catch (Exception e) {
-
-            e.printStackTrace();
+            // TODO : Logging 설정 셋업 되면 구현한다.
         }
         return encodedPwd;
     }
@@ -38,7 +37,7 @@ public class CryptoConvertUtil {
             decodedPWD = new String(decValue);
 
         } catch (Exception e) {
-            // NO action
+            // TODO : Logging 설정 셋업 되면 구현한다.
         }
         return decodedPWD;
     }
