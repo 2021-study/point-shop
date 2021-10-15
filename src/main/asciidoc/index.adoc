@@ -10,7 +10,7 @@
 
 [[api]]
 == exception-test
-api 에 관련된 설명을 이곳에 적습니다.
+테스트 전용 API 입니다.(Exception 발생시 Error 포맷에 맞는 Response 응답 여부 확인)
 
 include::{snippets}/exception-test/curl-request.adoc[]
 

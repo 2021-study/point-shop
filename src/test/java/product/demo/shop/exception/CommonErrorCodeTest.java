@@ -76,7 +76,7 @@ public class CommonErrorCodeTest {
                     assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
                 })
                 .andDo(
-                        document("exception-test",
+                        document("[테스트전용] exception-test",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.responseFields(
