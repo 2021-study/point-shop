@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import product.demo.shop.util.CryptoConvertUtil;
 
 // https://www.baeldung.com/spring-boot-configure-data-source-programmatic
 @Configuration
 @EnableTransactionManagement
+@EnableJpaAuditing(auditorAwareRef = "accountAuditAware")
 public class DataBaseConfiguration {
 
     @Value("${spring.datasource.url}")

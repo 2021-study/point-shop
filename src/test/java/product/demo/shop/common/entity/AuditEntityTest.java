@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import product.demo.shop.configuration.AuditConfiguration;
+import product.demo.shop.configuration.DataBaseConfiguration;
 import product.demo.shop.configuration.ObjectMapperConfig;
 
 @ExtendWith(SpringExtension.class)
@@ -26,7 +25,7 @@ import product.demo.shop.configuration.ObjectMapperConfig;
         // https://github.com/spring-projects/spring-boot/issues/13337#issuecomment-394132296
         includeFilters = @Filter(
         type = ASSIGNABLE_TYPE,
-        classes = {AccountAuditAware.class, AuditConfiguration.class, ObjectMapperConfig.class}
+        classes = {AccountAuditAware.class, DataBaseConfiguration.class, ObjectMapperConfig.class}
 ))
 @ActiveProfiles("test")
 @Slf4j
