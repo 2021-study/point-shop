@@ -1,0 +1,27 @@
+= RESTful Notes API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectlinks:
+:sectanchors:
+
+[[api]]
+== exception-test
+테스트 전용 API 입니다.(Exception 발생시 Error 포맷에 맞는 Response 응답 여부 확인)
+
+include::{snippets}/exception-test/curl-request.adoc[]
+
+include::{snippets}/exception-test/http-request.adoc[]
+
+include::{snippets}/exception-test/http-response.adoc[]
+
+include::{snippets}/exception-test/httpie-request.adoc[]
+
+include::{snippets}/exception-test/request-body.adoc[]
+
+include::{snippets}/exception-test/response-body.adoc[]
+
+include::{snippets}/exception-test/response-fields.adoc[]
