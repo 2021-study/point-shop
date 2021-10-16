@@ -1,9 +1,8 @@
-package product.demo.shop.exception;
+package product.demo.shop.common.exception;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import product.demo.shop.common.exception.CommonErrorCode;
 
 @RestController
 @RequestMapping("/exception-test")

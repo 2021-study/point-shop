@@ -1,4 +1,4 @@
-package product.demo.shop.exception;
+package product.demo.shop.common.exception;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -9,6 +9,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,9 +30,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import product.demo.shop.common.exception.CommonErrorResponse;
-import product.demo.shop.common.logger.CommonLogger;
 
+@Slf4j
 @ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
 @SpringBootTest
 //@EnableMockMvc // REST-Doc을 사용하는 경우 MockMvc가 나중에 초기화되므로 해당 어노테이션이 먹히지 않음.
@@ -67,8 +67,8 @@ public class CommonErrorCodeTest {
         )
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
                 .andDo(mvcResult->{
-                    CommonLogger.info("What is istatus : "
-                            + mvcResult.getResponse().getStatus(), CommonErrorCodeTest.class);
+                    log.info("What is istatus : "
+                            + mvcResult.getResponse().getStatus());
 
                     CommonErrorResponse errorResponse = this.objectMapper.readValue(mvcResult.getResponse().getContentAsString(
                             StandardCharsets.UTF_8), CommonErrorResponse.class);
