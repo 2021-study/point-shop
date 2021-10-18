@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,23 +14,21 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(value={AuditingEntityListener.class})
 @Getter
-@Setter
 public abstract class AuditEntity {
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     @CreatedDate
     protected LocalDateTime createdAt;
 
-    @Column(name = "created_by")
+    @Column(updatable = false)
     @CreatedBy
     protected String createdBy;
 
-    @Column(name = "last_modified_at")
+    @Column
     @LastModifiedDate
     protected LocalDateTime lastModifiedAt;
 
-    @Column(name = "last_modified_by")
+    @Column
     @LastModifiedBy
     protected String lastModifiedBy;
-
 }
