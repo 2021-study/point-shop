@@ -12,7 +12,7 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none # Flyway Migration으로 schema 초기화 진행
 
 server:
   port: 8077
