@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     url: jdbc:mysql://localhost:3306/shopdb
     # DB 접근 계정 정보 암호화
@@ -12,7 +15,9 @@ spring:
       hibernate:
         format_sql: true
     hibernate:
-      ddl-auto: none # Flyway Migration으로 schema 초기화 진행
+      ddl-auto: validate # Flyway Migration으로 schema 초기화 진행
+      use-new-id-generator-mappings: false
+    database: mysql
 
 server:
   port: 8077
