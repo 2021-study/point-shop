@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     url: jdbc:mysql://localhost:3306/shopdb
     # DB 접근 계정 정보 암호화
