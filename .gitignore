@@ -34,3 +34,5 @@ build/
 ### VS Code ###
 .vscode/
 logs\
+
+!**/src/main/resource/email.properties
