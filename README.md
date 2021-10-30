@@ -60,7 +60,36 @@ $ docker-compose down -v
 * 포트는 mysql 로컬 포트는 3306 입니다.
 * 로컬에 Mysql 서버를 이미 쓰시는 분은 3306포트가 선점되어 있어서 Container가 정상적으로 뜨지 않을 수 있습니다.
   * application.yml이나 docker-compose 스크립트의 host port를 바꾸지 마시고, 둘중 하나를 사용하시는걸 권장드립니다.
-  
+
+
+## flyway
+
+#### DataBase Migration Tool의 일종입니다.
+* 공식 홈페이지 : https://flywaydb.org/
+* 소개 자료 : https://ecsimsw.tistory.com/entry/Flyway%EB%A1%9C-DB-Migration
+
+#### 주요 명령어
+* ```flyway:migrate``` : 스키마와 이행 데이터를 DB에 마이그레이션
+* ```flyway:clean``` : 해당 데이터베이스 모든 테이블 삭제(flyway 히스토리도 삭제) 
+* ```flyway:repair``` : 마이그레이션 실패한 내역(history) 정리
+* ```flyway:undo``` : 이전 버전으로 롤백
+* ```flyway:validate``` : DB에 적용된 스키마와 로컬의 스키마 변경점 검증
+
+#### migrate : 아래와 같은 커맨드를 실행하여 Migration을 진행합니다.
+```bash
+$ cd $PROJECT_DIR
+$ ./mvnw -Dflyway.configFiles=flyway/config/local.conf flyway:migrate
+```
+-------
+
+#### clean : 모든 스키마와 테이블 초기화 합니다.
+* 원래는 공용 환경 DB에 이미 데이터가 쌓인 상태에서 clean을 하시면 안됩니다.
+* 트러블 슈팅이 살짝 복잡할 수 있어, 어짜피 로컬로 개발을 진행하다보니 편의를 위해 Clean을 통해 초기화를 진행해도 무방할듯 합니다.
+
+```bash
+$ cd $PROJECT_DIR
+$ ./mvnw -Dflyway.configFiles=flyway/config/local.conf flyway:clean
+```
 -------
 
 # 프로젝트 관련 정보 

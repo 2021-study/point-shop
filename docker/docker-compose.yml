@@ -4,7 +4,7 @@ volumes:
 services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의 ( 컴포즈에서 컨테이너 : 서비스 )
   point-shop-db: # 서비스 명
     #### mysql 이미지
-    image: mysql:5.7 # 사용할 이미지
+    image: mysql:8.0 # flyway 최신 버전이 Mysql 5.x 버전을 지원을 안해서 버전 업
     restart: always
     container_name: point-shop-mysql # 컨테이너 이름 설정
     ports:
