@@ -3,7 +3,6 @@ package product.demo.shop.common.email;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -14,13 +13,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.StopWatch;
 import product.demo.shop.common.mail.EmailParameter;
 import product.demo.shop.common.mail.MailService;
+import product.demo.shop.common.mail.MailServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("local")
 @Disabled // 이 테스트는 test scope에서 테스트 되지 않습니다.
 public class EmailServiceLocalTest {
 
-    @Autowired MailService mailService;
+    @Autowired
+    MailService mailService;
 
     @Test
     @DisplayName("실제 Google SMTP 서버와 연동하여 Mail 전송 테스트를 수행한다.")
@@ -32,7 +33,7 @@ public class EmailServiceLocalTest {
                         .content("테슷흐")
                         .build();
 
-        mailService.sendGoogleMail(emailParam);
+        mailService.sendMail(emailParam);
         Thread.sleep(3_000); // 서브 스레드에서 비동기로 돌고 있기 때문에 메인 테스트 스레드를 유지시켜주어야 한다.
     }
 
@@ -51,7 +52,7 @@ public class EmailServiceLocalTest {
                                         .content("테슷흐")
                                         .build())
                 .limit(5)
-                .forEach((it) -> this.mailService.sendGoogleMail(it));
+                .forEach((it) -> this.mailService.sendMail(it));
 
         stopwatch.stop(); // Stopwatch 종료
         assertThat(stopwatch.getTotalTimeSeconds())

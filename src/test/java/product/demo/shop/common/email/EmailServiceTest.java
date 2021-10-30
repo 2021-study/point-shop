@@ -10,13 +10,14 @@ import product.demo.shop.common.mail.EmailErrorCode;
 import product.demo.shop.common.mail.EmailParameter;
 import product.demo.shop.common.mail.MailSendException;
 import product.demo.shop.common.mail.MailService;
+import product.demo.shop.common.mail.MailServiceImpl;
 
 public class EmailServiceTest {
 
     private MailService mailService;
 
     public EmailServiceTest() {
-        this.mailService = new MailService(new MockMailSender(), "testsender@gmail.com");
+        this.mailService = new MailServiceImpl(new MockMailSender(), "testsender@gmail.com");
     }
 
     @Test
@@ -29,7 +30,7 @@ public class EmailServiceTest {
                         .content("테슷흐")
                         .build();
 
-        assertDoesNotThrow(() -> this.mailService.sendGoogleMail(emailParam));
+        assertDoesNotThrow(() -> this.mailService.sendMail(emailParam));
     }
 
     @Test
@@ -44,7 +45,7 @@ public class EmailServiceTest {
 
         var exception =
                 assertThrows(
-                        MailSendException.class, () -> this.mailService.sendGoogleMail(emailParam));
+                        MailSendException.class, () -> this.mailService.sendMail(emailParam));
 
         assertThat(exception.getErrorCode())
                 .isEqualTo(EmailErrorCode.EMAIL_SERVER_AUTH_FAIL.getErrorStatus().value());
@@ -62,7 +63,7 @@ public class EmailServiceTest {
 
         var exception =
                 assertThrows(
-                        MailSendException.class, () -> this.mailService.sendGoogleMail(emailParam));
+                        MailSendException.class, () -> this.mailService.sendMail(emailParam));
 
         assertThat(exception.getErrorCode())
                 .isEqualTo(EmailErrorCode.EMAIL_SEND_PROCESS_ERROR.getErrorStatus().value());
@@ -80,7 +81,7 @@ public class EmailServiceTest {
 
         var exception =
                 assertThrows(
-                        MailSendException.class, () -> this.mailService.sendGoogleMail(emailParam));
+                        MailSendException.class, () -> this.mailService.sendMail(emailParam));
 
         assertThat(exception.getErrorCode())
                 .isEqualTo(EmailErrorCode.EMAIL_UNKNOWN_ERROR.getErrorStatus().value());
