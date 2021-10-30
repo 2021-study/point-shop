@@ -3,6 +3,7 @@ package product.demo.shop.domain.user.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import product.demo.shop.common.converter.CryptoConverter;
 import product.demo.shop.common.entity.AuditEntity;
 
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @Table(name = "TB_USER_INFO")
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class UserEntity extends AuditEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

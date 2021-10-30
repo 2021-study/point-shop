@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 import product.demo.shop.domain.user.dto.UserInfoDto;
-import product.demo.shop.domain.user.repository.jpa.UserRepository;
+import product.demo.shop.domain.user.repository.UserRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

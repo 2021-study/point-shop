@@ -1,5 +1,8 @@
 package product.demo.shop.util;
 
+import product.demo.shop.common.exception.CommonErrorCode;
+import product.demo.shop.common.exception.CommonException;
+
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Base64;
@@ -21,7 +24,8 @@ public class CryptoConvertUtil {
             encodedPwd = Base64.getEncoder().encodeToString(encVal);
 
         } catch (Exception e) {
-            // TODO : Logging 설정 셋업 되면 구현한다.
+            // TODO : 이 부분 테스트 하는 법 아시는분?
+            throw new CommonException(CommonErrorCode.ENCRYPTION_ERROR); // 암호화 처리에 실패하였습니다.
         }
         return encodedPwd;
     }
@@ -37,7 +41,8 @@ public class CryptoConvertUtil {
             decodedPWD = new String(decValue);
 
         } catch (Exception e) {
-            // TODO : Logging 설정 셋업 되면 구현한다.
+            // TODO : 이 부분 테스트 하는 법 아시는분?
+            throw new CommonException(CommonErrorCode.DECRYPTION_ERROR); // 복호화 처리에 실패하였습니다.
         }
         return decodedPWD;
     }

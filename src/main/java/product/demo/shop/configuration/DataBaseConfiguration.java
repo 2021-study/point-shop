@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import product.demo.shop.util.CryptoConvertUtil;
@@ -28,6 +29,7 @@ public class DataBaseConfiguration {
     private String driverClassName;
 
     @Bean
+    @Profile("local") // 이건 테스트가 될 수 가 없을 것 같네요
     public DataSource defaultDataSource() {
         var dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(url);
