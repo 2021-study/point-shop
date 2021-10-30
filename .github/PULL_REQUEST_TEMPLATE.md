@@ -11,5 +11,5 @@
 ### Issue Link
 [이슈 링크](https://github.com/2021-study/point-shop/issues/2)
 
-### 주요 변겅점 기술
+### 주요 변경점 기술
 *
