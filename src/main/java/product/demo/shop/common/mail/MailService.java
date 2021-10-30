@@ -18,9 +18,7 @@ public class MailService {
     private final String senderEmailAddress;
 
     public MailService(
-            MailSender mailSender,
-            @Value("${spring.mail.username}") String senderEmailAddress
-    ) {
+            MailSender mailSender, @Value("${spring.mail.username}") String senderEmailAddress) {
         this.mailSender = mailSender;
         this.senderEmailAddress = senderEmailAddress;
     }
@@ -28,6 +26,7 @@ public class MailService {
     // Email 전송시 외부 SMTP 서버와 연동이 필요한데,
     // 이를 비동기로 처리하도록 하여 성능 향상 도모가 가능할 듯 하여
     // 메일 전송 기능을 Async로 구현하고자 합니다.
+    // 이 호출이 정상적으로 종료가 되었는지 실패했는지에 대해 메인 호출 스레드에 전달하는 처리는 따로 없습니다.
     @Async
     public void sendGoogleMail(EmailParameter emailParameter) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -37,13 +36,13 @@ public class MailService {
         mailMessage.setSubject(emailParameter.getTitle());
         mailMessage.setText(emailParameter.getContent());
 
-        try{
+        try {
             this.mailSender.send(mailMessage);
-        } catch(MailAuthenticationException ex) {
+        } catch (MailAuthenticationException ex) {
             throw new MailSendException(EmailErrorCode.EMAIL_SERVER_AUTH_FAIL, ex);
-        } catch(MailException ex) {
+        } catch (MailException ex) {
             throw new MailSendException(EmailErrorCode.EMAIL_SEND_PROCESS_ERROR, ex);
-        } catch(RuntimeException ex){
+        } catch (RuntimeException ex) {
             throw new MailSendException(EmailErrorCode.EMAIL_UNKNOWN_ERROR, ex);
         }
     }

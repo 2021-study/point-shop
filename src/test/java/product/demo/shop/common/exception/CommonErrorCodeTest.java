@@ -31,6 +31,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+/** 이건 Spring restdoc과 CommonExceptionHandler 테스트용 코드입니다.
+ *  실제 문서화가 필요한 API를 위해 참고용으로 만들어 놓은 코드로 보시면 됩니다.
+ */
 @Slf4j
 @ExtendWith({ RestDocumentationExtension.class, SpringExtension.class })
 @SpringBootTest
@@ -76,7 +79,67 @@ public class CommonErrorCodeTest {
                     assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
                 })
                 .andDo(
-                        document("[테스트전용] exception-test",
+                        document("[테스트전용] CommonException 활용 테스트 코드 입니다(Errorcode)",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                PayloadDocumentation.responseFields(
+                                        PayloadDocumentation.fieldWithPath("errorCode")
+                                                .description("Error Code 필드 입니다."),
+                                        PayloadDocumentation.fieldWithPath("errorMessage")
+                                                .description("에러 메시지 필드 입니다.")
+                                )));
+    }
+
+    @Test
+    @WithMockUser
+    public void commonExceptionWithDescription() throws Exception {
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/exception-test/unknown-error-with-description")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andDo(mvcResult->{
+                    log.info("What is istatus : "
+                            + mvcResult.getResponse().getStatus());
+
+                    CommonErrorResponse errorResponse = this.objectMapper.readValue(mvcResult.getResponse().getContentAsString(
+                            StandardCharsets.UTF_8), CommonErrorResponse.class);
+
+                    assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
+                })
+                .andDo(
+                        document("[테스트전용] CommonException 활용 테스트 코드 입니다(Errorcode + Description)",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                PayloadDocumentation.responseFields(
+                                        PayloadDocumentation.fieldWithPath("errorCode")
+                                                .description("Error Code 필드 입니다."),
+                                        PayloadDocumentation.fieldWithPath("errorMessage")
+                                                .description("에러 메시지 필드 입니다.")
+                                )));
+    }
+
+    @Test
+    @WithMockUser
+    public void commonExceptionWithDescriptionAndThrowable() throws Exception {
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/exception-test/unknown-error-with-description-throwable")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andDo(mvcResult->{
+                    log.info("What is istatus : "
+                            + mvcResult.getResponse().getStatus());
+
+                    CommonErrorResponse errorResponse = this.objectMapper.readValue(mvcResult.getResponse().getContentAsString(
+                            StandardCharsets.UTF_8), CommonErrorResponse.class);
+
+                    assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
+                })
+                .andDo(
+                        document("[테스트전용] CommonException 활용 테스트 코드 입니다(Errorcode + Description + throwable)",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.responseFields(

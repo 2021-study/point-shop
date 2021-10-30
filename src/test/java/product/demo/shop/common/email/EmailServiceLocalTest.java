@@ -17,18 +17,20 @@ import product.demo.shop.common.mail.MailService;
 
 @SpringBootTest
 @ActiveProfiles("local")
-@Disabled
+@Disabled // 이 테스트는 test scope에서 테스트 되지 않습니다.
 public class EmailServiceLocalTest {
 
-    @Autowired
-    MailService mailService;
+    @Autowired MailService mailService;
 
     @Test
     @DisplayName("실제 Google SMTP 서버와 연동하여 Mail 전송 테스트를 수행한다.")
     public void sendMailTest() throws InterruptedException {
-        var emailParam = new EmailParameter("dlswp113@gmail.com",
-                "테스트 메일전송입니다.",
-                "테슷흐");
+        var emailParam =
+                EmailParameter.builder()
+                        .receiverEmailAddress("dlswp113@gmail.com")
+                        .title("테스트 메일 전송입니다.")
+                        .content("테슷흐")
+                        .build();
 
         mailService.sendGoogleMail(emailParam);
         Thread.sleep(3_000); // 서브 스레드에서 비동기로 돌고 있기 때문에 메인 테스트 스레드를 유지시켜주어야 한다.
@@ -39,23 +41,26 @@ public class EmailServiceLocalTest {
     public void successSendMailAsync() throws InterruptedException {
         AtomicInteger index = new AtomicInteger();
 
-        var mailList = Stream.generate(() -> new EmailParameter(
-                        "dlswp113@gmail.com",
-                        "테스트 메일전송입니다.",
-                        "TEST"+index.incrementAndGet()))
-                .limit(5)
-                .collect(Collectors.toList());
         var stopwatch = new StopWatch();
-        stopwatch.start();
+        stopwatch.start(); //   Stopwatch 시작
+        Stream.generate(
+                        () ->
+                                EmailParameter.builder()
+                                        .receiverEmailAddress("dlswp113@gmail.com")
+                                        .title("테스트 메일 전송입니다. - " + index.incrementAndGet())
+                                        .content("테슷흐")
+                                        .build())
+                .limit(5)
+                .forEach((it) -> this.mailService.sendGoogleMail(it));
 
-        for(EmailParameter mail : mailList){
-            this.mailService.sendGoogleMail(mail);
-        }
-        stopwatch.stop();
-        assertThat(stopwatch.getTotalTimeSeconds()).isLessThan(1.0); // 1초 컷
+        stopwatch.stop(); // Stopwatch 종료
+        assertThat(stopwatch.getTotalTimeSeconds())
+                .isLessThan(1.0); // 1초 컷 -> 실제로 메인은 1초내외로 종료가 되어야 테스트가 정상으로 볼 수 있다.
 
         System.out.println(stopwatch.prettyPrint());
 
-        Thread.sleep(10_000); // 서브 스레드에서 비동기로 돌고 있기 때문에 메인 테스트 스레드를 유지시켜주어야 한다.
+        // 서브 스레드에서 비동기로 돌고 있기 때문에 메인 테스트 스레드를 유지시켜주어야 한다.
+        // 경우에 따라서 10초가 지나도 모든 메일이 전송되지 않을 수 도 있습니다.
+        Thread.sleep(10_000);
     }
 }

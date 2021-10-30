@@ -37,7 +37,7 @@ public class AsyncServiceTest {
         testAsyncService.asyncCounterDelayed();
         assertEquals(0, SharedCounter.getValue());
 
-        Thread.sleep(5_000);
+        Thread.sleep(1_000);
         assertEquals(3, SharedCounter.getValue());
 
         SharedCounter.incrementCounter();

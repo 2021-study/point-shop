@@ -1,10 +1,11 @@
 package product.demo.shop.common.mail;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class EmailParameter {
 
     // TODO : Spring validation이 merge가 되면 @Email 어노테이션을 활용해보는것도 좋을 듯.
