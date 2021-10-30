@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -49,19 +54,17 @@ public class AsyncServiceTest {
                  (res) -> log.info("TASK 3 :: " + res),
                  (ex) -> log.error("TASK 3 FAILED", ex));
 
-         while(true){
-//             log.info("====JUST WAITING====");
-            // Thread 잠금 없이 3개의 서브 태스크가 모두 isDone()이 떨어지면 success
-             if(future1.isDone() && future2.isDone() && future3.isDone()){
-                 log.info("It's All Done");
-                 assertEquals(3, SharedCounter.getValue());
-                 SharedCounter.incrementCounter();
-                 assertEquals(4, SharedCounter.getValue());
-                 break;
-             }
+         try{
+             // Future<T>.get() 으로 blocking으로 비동기 태스크의 결과를 얻을 때 까지 대기할 수 있습니다.
+             String task1Result = future1.get(20, TimeUnit.SECONDS);
+             String task2Result = future2.get(20, TimeUnit.SECONDS);
+             String task3Result = future3.get(20, TimeUnit.SECONDS);
 
-             // 60초 동안 서브 태스크에서 isDone() 콜백이 없으면 Timeout으로 간주
-             // 해당 부분은 AsyncConfig 설정으로 들어가 있음.(executor.setAwaitTerminationSeconds(60))
+             assertThat(task1Result).isEqualTo("Success");
+             assertThat(task2Result).isEqualTo("Success");
+             assertThat(task3Result).isEqualTo("Success");
+         }catch(TimeoutException | ExecutionException | InterruptedException ex){
+             ex.printStackTrace();
          }
     }
 }
