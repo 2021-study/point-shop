@@ -41,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .permitAll()
                 .and()
+                .oauth2Login()
+                .and()
                 .logout()
                 .permitAll()
                 .and()
