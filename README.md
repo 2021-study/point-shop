@@ -107,6 +107,8 @@ sns.properties 를 만들어서 해당 값을 추가합니다.
 
 네이버의 경우 필수 항목을 이메일 & 회원이름으로 세팅
 
+![img.png](img.png)
+
 ```text
 # sns.properties
 sns.google.client-id=구글API_client_id

@@ -1,11 +1,9 @@
 package product.demo.shop.domain.user.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import product.demo.shop.domain.user.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

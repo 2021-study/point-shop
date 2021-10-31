@@ -1,7 +1,6 @@
 package product.demo.shop.configuration;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import product.demo.shop.domain.user.service.CustomUserDetailsService;
 
-import javax.sql.DataSource;
 
 @Configuration
 @RequiredArgsConstructor
