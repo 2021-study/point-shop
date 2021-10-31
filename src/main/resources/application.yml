@@ -1,5 +1,19 @@
 spring:
   application:
     name: point-shop
+  config:
+    import:
+      - email.properties
   main:
     allow-bean-definition-overriding: true
+  ##############################################
+  #  Springboot Mail
+  ############################################
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email.spring.mail.username}
+    password: ${email.spring.mail.password}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true

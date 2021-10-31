@@ -13,17 +13,6 @@ public class CommonException extends RuntimeException{
     String description;
     Throwable cause;
 
-    public CommonException(String message){
-        super(message);
-        this.message = message;
-    }
-
-    public CommonException(String message, Throwable throwable){
-        super(message, throwable);
-        this.message = message;
-        this.cause = throwable;
-    }
-
     public CommonException(ErrorCode errorCode){
         super("[ErrorCode] : " + errorCode.getErrorStatus() + "\n"
                 + "[ErrorMessage] : " + errorCode.getErrorMessage() + "\n");
