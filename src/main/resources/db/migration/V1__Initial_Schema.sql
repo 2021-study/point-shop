@@ -77,6 +77,116 @@ CREATE TABLE `tb_grade_policy` (
    PRIMARY KEY (`grade_policy_id`)
 ) COMMENT='등급별 졍책 관리';
 
+DROP TABLE IF EXISTS `TB_POINT_EVENT`;
 
+CREATE TABLE `TB_POINT_EVENT` (
+  `point_event_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
+  `user_info_id`	bigint(20)	NOT NULL,
+  `event_type`	varchar(15)	NOT NULL	COMMENT '(적립, 사용)',
+  `point`	int	NOT NULL	COMMENT '금액',
+  `code`	varchar(15)	NOT NULL	COMMENT '(REVIEW , ORDER, EVENT)',
+  `code_id`	varchar(50)	NULL	COMMENT '추적용 테이블 아이디 값',
+  `detail`	VARCHAR(255)	NULL	COMMENT '적립, 사용에 대한 상세 이유',
+  `point_expired_date`	datetime	NOT NULL	COMMENT '만료일자',
+  `created_at`	datetime	NULL	COMMENT '최초생성일시',
+  `created_by`	varchar(50)	NULL	COMMENT '최초생성주체',
+  `last_modified_at`	datetime	NULL	COMMENT '최종변경일시',
+  `last_modified_by`	varchar(50)	NULL	COMMENT '최종변경주체',
+  PRIMARY KEY (`point_event_id`),
+  KEY index_user_info_id(`user_info_id`),
+  KEY index_code_code_id(`code`, `code_id`)
+)COMMENT='포인트 이벤트';
+
+DROP TABLE IF EXISTS `TB_POINT_DETAIL`;
+
+CREATE TABLE `TB_POINT_DETAIL` (
+   `point_detail_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
+   `point_event_id`	bigint(20)	NOT NULL	COMMENT '원본 포인트 아이디',
+   `event_type`	varchar(15)	NOT NULL	COMMENT '(적립, 사용)',
+   `detail_accumulated_point_id`	bigint(20)	NOT NULL	COMMENT '상세 적립 아이디',
+   `point`	int	NOT NULL	COMMENT '거래 포인트',
+   `point_processed_date`	datetime	NOT NULL	COMMENT '처리 일자',
+   `point_expired_date`	datetime	NULL	COMMENT '만료일자',
+   `created_at`	datetime	NULL	COMMENT '최초생성일시',
+   `created_by`	varchar(50)	NULL	COMMENT '최초변경주체',
+   `last_modified_at`	datetime	NULL	COMMENT '최종변경일시',
+   `last_modified_by`	varchar(50)	NULL	COMMENT '최종변경주체',
+   PRIMARY KEY (`point_detail_id`),
+   KEY index_point_event_id(`point_event_id`),
+   KEY index_d_a_point_id(`detail_accumulated_point_id`)
+)COMMENT='포인트 이벤트 상세';
+
+DROP TABLE IF EXISTS `TB_PRODUCT_CATEGORY`;
+
+CREATE TABLE `TB_PRODUCT_CATEGORY` (
+   `product_category_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
+   `parent`	bigint(20)	NULL,
+   `product_category_name`	varchar(250)	NOT NULL	COMMENT '상품 카테고리명칭',
+   `created_at`	datetime	NULL	COMMENT '최초생성일시',
+   `created_by`	varchar(50)	NULL	COMMENT '최초생성주체',
+   `last_modified_at`	datetime	NULL	COMMENT '최종변경일시',
+   `last_modified_by`	varchar(50)	NULL	COMMENT '최종변경주체',
+   PRIMARY KEY (`product_category_id`),
+   KEY index_parent(`parent`)
+)COMMENT='상품 카테고리';
+
+ALTER TABLE `TB_PRODUCT_CATEGORY` ADD CONSTRAINT `FK_TB_PRODUCT_CATEGORY_TO_TB_PRODUCT_CATEGORY_1`
+    FOREIGN KEY (`parent`)
+    REFERENCES `TB_PRODUCT_CATEGORY` (`product_category_id`);
+
+
+DROP TABLE IF EXISTS `TB_PRODUCT_INFO`;
+
+CREATE TABLE `TB_PRODUCT_INFO` (
+   `product_info_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
+   `product_category_id`	bigint(20)	NOT NULL,
+   `product_name`	varchar(45)	NOT NULL	COMMENT '상품명',
+   `price`	decimal(10,5)	NOT NULL	COMMENT '가격',
+   `tax_rate`	decimal(10,5)	NOT NULL	COMMENT '과세율',
+   `product_status`	varchar(20)	NOT NULL	COMMENT '상품 상태',
+   `minimum_purchase_age`	int	NOT NULL	COMMENT '최소 구매 연령',
+   `stock_quantity`	int	NULL	COMMENT '재고 수량',
+   `created_at`	datetime	NULL	COMMENT '최초생성일시',
+   `created_by`	varchar(50)	NULL	COMMENT '최초생성주체',
+   `last_modified_at`	datetime	NULL	COMMENT '최종변경일시',
+   `last_modified_by`	varchar(50)	NULL	COMMENT '최종변경주체',
+   PRIMARY KEY (`product_info_id`),
+   KEY index_p_category_id(`product_category_id`)
+) COMMENT ='상품정보';
+
+DROP TABLE IF EXISTS `TB_ORDER_INFO`;
+
+CREATE TABLE `TB_ORDER_INFO` (
+     `order_info_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
+     `order_number`	varchar(30)	NOT NULL	COMMENT '유니크 주문 번호',
+     `user_id`	bigint(20)	NOT NULL	COMMENT 'user_id',
+     `address`	varchar(250)	NULL	COMMENT '주소',
+     `phone_number`	varchar(20)	NULL	COMMENT '전화번호(sub)',
+     `user_name`	varchar(150)	NULL	COMMENT '수취인',
+     `order_price`	decimal(10,5)	NULL	COMMENT '주문금액',
+     `created_at`	datetime	NULL	COMMENT '최초생성일시',
+     `created_by`	varchar(50)	NULL	COMMENT '최초생성주체',
+     `last_modified_at`	datetime	NULL	COMMENT '최종변경일시',
+     `last_modified_by`	varchar(50)	NULL	COMMENT '최종변경주체',
+     PRIMARY KEY (`order_info_id`),
+     UNIQUE KEY uk_order_number(`order_number`),
+     KEY index_user_id(`user_id`)
+)COMMENT ='주문 정보';
+
+DROP TABLE IF EXISTS `TB_ORDER_ITMES`;
+
+CREATE TABLE `TB_ORDER_ITEMS` (
+      `order_items_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
+      `product_info_id`	bigint(20)	NOT NULL,
+      `order_info_id`	bigint(20)	NOT NULL,
+      `purchase_quantity`	int(10)	NOT NULL	COMMENT '구매 수량',
+      `created_at`	datetime	NULL	COMMENT '최초생성일시',
+      `created_by`	varchar(50)	NULL	COMMENT '최초생성주체',
+      `last_modified_at`	datetime	NULL	COMMENT '최종변경일시',
+      `last_modified_by`	varchar(50)	NULL	COMMENT '최종변경주체',
+      PRIMARY KEY (`order_items_id`),
+      KEY index_p_info_id(`product_info_id`),
+      KEY index_o_info_id(`order_info_id`)
+)COMMENT ='주문 품목';
 
 
