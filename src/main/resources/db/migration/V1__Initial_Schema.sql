@@ -13,8 +13,7 @@ CREATE TABLE `tb_user_info` (
     `password`	varchar(150)	NULL COMMENT 'password(단방향 Hashed)',
     `phone`	varchar(25)	NULL COMMENT '전화번호',
     `address`	varchar(100)	NULL COMMENT '주소(AES 양방향 HASHED)',
-    `email_verification_status`	varchar(10)	NOT NULL COMMENT 'Email 인증 상태', /*회원 상태로도 표현할 수 있지 않나? 굳이 필요한건가...*/
-    `user_status_code`	varchar(4)	NULL	COMMENT '회원상태코드',
+    `user_status`	varchar(30)	NULL	COMMENT '회원상태코드',
     `created_at`	datetime	NULL COMMENT '생성일시',
     `created_by`	varchar(50)	NULL COMMENT '생성주체',
     `last_modified_at`	datetime	NULL COMMENT '최종수정일시',
@@ -49,6 +48,7 @@ CREATE TABLE `tb_email_verification` (
   `email_verification_code_id`	bigint(20)	NOT NULL AUTO_INCREMENT COMMENT 'email_verification_code_id',
   `user_id`	bigint(20)	NOT NULL COMMENT 'user_id',
   `verification_code`	varchar(36)	NOT NULL COMMENT '인증코드',
+  `verification_code_status`	varchar(20)	NOT NULL COMMENT '인증 코드 상태',
   `expired_date`	datetime	NULL COMMENT '코드만료일시',
   `created_at`	datetime	NULL COMMENT '생성일시',
   `created_by`	varchar(50)	NULL COMMENT '생성주체',
@@ -64,8 +64,8 @@ DROP TABLE IF EXISTS `tb_grade_policy`;
 CREATE TABLE `tb_grade_policy` (
    `grade_policy_id`	bigint(20)	NOT NULL AUTO_INCREMENT	COMMENT '정책 Id',
    `user_grade_id`	bigint(20)	NOT NULL COMMENT 'user_grade_id',
-   `policy_object`	varchar(1)	NULL	COMMENT '정책적용대상(포인트, 주문가격)',
-   `policy_type`	varchar(4)	NULL	COMMENT '(증가/할인)',
+   `policy_object`	varchar(20)	NULL	COMMENT '정책적용대상(포인트, 주문가격)',
+   `policy_type`	varchar(12)	NULL	COMMENT '(증가/할인)',
    `unit_of_measure`	varchar(12)	NULL	COMMENT '단위',
    `policy_name`	varchar(300)	NULL	COMMENT '정책 명',
    `applied_value`	decimal(10,5)	NULL	COMMENT '정책 적용 값',

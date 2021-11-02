@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import product.demo.shop.common.entity.AuditEntity;
 import product.demo.shop.domain.grade.entity.enums.GradePolicyObject;
 import product.demo.shop.domain.grade.entity.enums.GradePolicyType;
-import product.demo.shop.domain.grade.entity.enums.UomType;
+import product.demo.shop.domain.grade.entity.enums.MeasurementType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class GradePolicyEntity extends AuditEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private UomType unitOfMeasure;
+    private MeasurementType unitOfMeasure;
 
     @Column
     private BigDecimal appliedValue;

@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum GradePolicyType {
-    INC("증가"),
-    DEC("할인")
+    INCREMENT("증가"),
+    DECREMENT("할인")
     ;
     private final String value;
 
