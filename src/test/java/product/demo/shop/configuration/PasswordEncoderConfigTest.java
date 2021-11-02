@@ -43,10 +43,13 @@ class PasswordEncoderConfigTest {
         }
 
         @Test
-        void 암호화_알고리즘_prefix가_없는_비밀번호는_bcrypt로_매칭되는지_테스트(){
+        void prefix가_없는_비밀번호는_error가_나는지_테스트(){
             String encodedPassword = "$2a$10$XSRY968YOaQ0MQUYezoqQ.tes.1hn9AOhHeq3VXw9EB4.GHefq6Ee";
             String planPassword = "1234asdf!@#$";
-            assertThat(passwordEncoder.matches(planPassword,encodedPassword), is(equalTo(true)));
+            IllegalArgumentException illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                passwordEncoder.matches(planPassword, encodedPassword);
+            });
+            assertThat(illegalArgumentException.getMessage(), is(equalTo("There is no PasswordEncoder mapped for the id \"null\"")));
         }
     }
 
