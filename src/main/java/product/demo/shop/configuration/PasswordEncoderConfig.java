@@ -18,7 +18,6 @@ public class PasswordEncoderConfig {
         encoders.put(defaultPasswordAlgorithm, defaultPasswordEncoder);
 
         DelegatingPasswordEncoder delegatingPasswordEncoder = new DelegatingPasswordEncoder(defaultPasswordAlgorithm, encoders);
-        delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(defaultPasswordEncoder);
 
         return delegatingPasswordEncoder;
     }
