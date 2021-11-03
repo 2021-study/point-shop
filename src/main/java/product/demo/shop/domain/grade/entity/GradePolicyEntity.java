@@ -1,7 +1,6 @@
 package product.demo.shop.domain.grade.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import product.demo.shop.common.entity.AuditEntity;
 import product.demo.shop.domain.grade.entity.enums.GradePolicyObject;
 import product.demo.shop.domain.grade.entity.enums.GradePolicyType;
@@ -19,7 +18,9 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "TB_GRADE_POLICY")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Getter
 public class GradePolicyEntity extends AuditEntity {
 

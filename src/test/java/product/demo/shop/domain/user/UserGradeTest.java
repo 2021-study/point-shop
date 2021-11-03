@@ -8,8 +8,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import product.demo.shop.common.entity.AccountAuditAware;
@@ -24,7 +22,6 @@ import product.demo.shop.domain.user.repository.UserRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.context.annotation.ComponentScan.Filter;
-import product.demo.shop.domain.user.repository.custom.UserRepositoryImpl;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -56,12 +53,12 @@ public class UserGradeTest {
 
     @BeforeAll
     public void setUpTestData() {
-        var testUser = UserEntity.sampleUser();
+        var testUser = makeSampleUser("sample");
         var testUserGradeList =
                 List.of(
-                        new UserGradeEntity(GradeName.BRONZE),
-                        new UserGradeEntity(GradeName.SILVER),
-                        new UserGradeEntity(GradeName.GOLD));
+                        UserGradeEntity.builder().gradeName(GradeName.BRONZE).build(),
+                        UserGradeEntity.builder().gradeName(GradeName.SILVER).build(),
+                        UserGradeEntity.builder().gradeName(GradeName.GOLD).build());
 
         userRepository.save(testUser);
         userGradeRepository.saveAll(testUserGradeList);
@@ -103,9 +100,25 @@ public class UserGradeTest {
                                 });
 
         assertThat(registeredUser.getName()).isEqualTo("sample");
-        var newUser = UserEntity.sampleUser();
-        newUser.setName("Jacob");
+        var newUser =
+                makeSampleUser("Jacob");
         var newRegisterUser  = userRepository.saveAndFlush(newUser);
         assertThat(newRegisterUser.getName()).isEqualTo("Jacob");
+    }
+
+    private UserEntity makeSampleUser(String name) {
+        return UserEntity
+                .builder()
+                .userGradeId(1L)
+                .userAccountId("sampleUser")
+                .snsProviderType("sns_provider")
+                .name(name)
+                .email("sample@email.com")
+                .phone("010-1111-1111")
+                .password("password")
+                .address("address")
+                .emailVerificationStatus("READY")
+                .userStatusCode("0001")
+                .build();
     }
 }

@@ -1,9 +1,6 @@
 package product.demo.shop.domain.grade.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import product.demo.shop.common.entity.AuditEntity;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 
@@ -18,8 +15,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TB_USER_GRADE")
-@NoArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Getter
 public class UserGradeEntity extends AuditEntity {
 
