@@ -1,6 +1,4 @@
 spring:
-  flyway:
-    enabled: false
   config:
     activate:
       on-profile: test
@@ -16,3 +14,5 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+  flyway:
+    enabled: false

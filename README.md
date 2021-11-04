@@ -95,3 +95,25 @@ $ ./mvnw -Dflyway.configFiles=flyway/config/local.conf flyway:clean
 # 프로젝트 관련 정보 
 ## 요구 사항
 * https://docs.google.com/spreadsheets/d/1oOJCVsUSJKi5_rX3wWXLPg0Vkb6J2mU7tJAOGybK0zc/edit?usp=sharing
+
+
+# SNS 로그인 연동 관련 세팅
+
+sns.properties 를 만들어서 해당 값을 추가합니다.
+
+[구글](https://www.google.com/search?q=spring+security+google+login+%EC%84%B8%ED%8C%85&oq=spring+security+google+login+%EC%84%B8%ED%8C%85&aqs=chrome..69i57j0i30l2j0i8i30l2&sourceid=chrome&ie=UTF-8)
+
+[네이버](https://developers.naver.com/docs/common/openapiguide/appregister.md)
+
+네이버의 경우 필수 항목을 이메일 & 회원이름으로 세팅
+
+![img.png](img.png)
+
+```text
+# sns.properties
+sns.google.client-id=구글API_client_id
+sns.google.password=구글API_client_secret
+
+sns.naver.client-id=네이버API_client_id
+sns.naver.password=네이버API_client_secret
+```

@@ -1,9 +1,6 @@
 package product.demo.shop.domain.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import product.demo.shop.common.converter.CryptoConverter;
 import product.demo.shop.common.entity.AuditEntity;
 
@@ -18,9 +15,9 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Table(name = "TB_USER_INFO")
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class UserEntity extends AuditEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,21 +51,9 @@ public class UserEntity extends AuditEntity {
     private String password; // TODO : Password는 단방향 해싱이 되어야 한다.
 
     @Column
-    private String userStatus;
+    private String emailVerificationStatus;
 
-    public static UserEntity sampleUser(){
+    @Column
+    private String userStatusCode;
 
-        return new UserEntity(
-                null,
-                1L,
-                "sampleUser",
-                "sns_provider",
-                "sample",
-                "sample@email.com",
-                "password",
-                "010-1111-1111",
-                "address",
-                "0001"
-        );
-    }
 }

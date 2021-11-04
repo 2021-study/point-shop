@@ -1,7 +1,6 @@
 package product.demo.shop.domain.user.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import product.demo.shop.common.entity.AuditEntity;
 
 import javax.persistence.Column;
@@ -14,7 +13,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="TB_EMAIL_VERIFICATION")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Getter
 public class EmailVerificationEntity extends AuditEntity {
 
