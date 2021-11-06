@@ -17,6 +17,7 @@ import product.demo.shop.domain.grade.entity.UserGradeEntity;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 import product.demo.shop.domain.grade.repository.UserGradeRepository;
 import product.demo.shop.domain.user.entity.UserEntity;
+import product.demo.shop.domain.user.entity.enums.UserStatusType;
 import product.demo.shop.domain.user.repository.UserRepository;
 
 import java.util.List;
@@ -117,7 +118,7 @@ public class UserGradeTest {
                 .phone("010-1111-1111")
                 .password("password")
                 .address("address")
-                .userStatus("CONFIRMED")
+                .userStatus(UserStatusType.VERIFIED)
                 .build();
     }
 }
