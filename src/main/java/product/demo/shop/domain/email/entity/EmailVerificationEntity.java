@@ -1,4 +1,4 @@
-package product.demo.shop.domain.user.entity;
+package product.demo.shop.domain.email.entity;
 
 import lombok.*;
 import product.demo.shop.common.entity.AuditEntity;
