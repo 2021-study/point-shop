@@ -2,6 +2,7 @@ package product.demo.shop.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
@@ -35,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(AUTH_API_PATH + "/sign-up")
                 .permitAll()
-                .antMatchers("/api/v1/auth/verify/{userInfoId}/{tokenValue}")
+                .antMatchers(AUTH_API_PATH + "/verify/{userInfoId}/{tokenValue}")
                 .permitAll()
                 .antMatchers(CommonController.DEFAULT_PATH)
                 .hasAnyRole("USER")
@@ -57,5 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .frameOptions()
                 .disable()
                 .and();
+    }
+
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        // https://blog.devbong.com/95
+        var provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setHideUserNotFoundExceptions(false); // Not recommend
+        return provider;
     }
 }

@@ -1,12 +1,15 @@
 package product.demo.shop.common.exception.hadler;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import product.demo.shop.common.exception.CommonErrorCode;
 import product.demo.shop.common.exception.CommonErrorResponse;
 import product.demo.shop.common.exception.CommonException;
+import product.demo.shop.domain.auth.exception.PointShopAuthErrorCode;
 import product.demo.shop.domain.auth.exception.PointShopAuthException;
 
 import javax.servlet.http.HttpServletRequest;

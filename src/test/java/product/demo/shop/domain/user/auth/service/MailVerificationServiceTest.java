@@ -63,7 +63,35 @@ public class MailVerificationServiceTest {
 
     @Test
     @DisplayName("메일 인증 완료 로직 성공")
-    public void validateMailCode_success() {}
+    public void validateMailCode_success() throws Exception {
+        when(emailVerificationRepository.findByUserIdAndVerificationCode(any(), any()))
+                .thenReturn(
+                    Optional.of(
+                            EmailVerificationEntity.builder()
+                                    .emailVerificationCodeId(1L)
+                                    .verificationCode("string")
+                                    .userId(1L)
+                                    .expiredDate(LocalDateTime.now().plusYears(90000))
+                                    .verificationCodeStatus("CREATED")
+                                    .build()
+                    )
+                );
+
+        when(emailVerificationRepository.save(any())).thenReturn(
+                EmailVerificationEntity.builder()
+                        .emailVerificationCodeId(1L)
+                        .verificationCode("string")
+                        .userId(1L)
+                        .expiredDate(LocalDateTime.now())
+                        .verificationCodeStatus("CONFIRMED")
+                        .build()
+        );
+
+        assertDoesNotThrow(()->{
+            var result = this.mailValidationService.validateMailCode(1L, "string");
+            assertEquals("CONFIRMED", result.getValidationStatus());
+        });
+    }
 
     @Test
     @DisplayName("인증 코드 만료로 validateMailCode Failed")

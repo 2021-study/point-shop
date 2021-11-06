@@ -27,6 +27,7 @@ import product.demo.shop.domain.user.entity.UserEntity;
 import product.demo.shop.domain.user.entity.enums.UserStatusType;
 import product.demo.shop.domain.user.repository.UserRepository;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -134,7 +135,7 @@ public class AuthServiceImplTest {
     }
 
     @Test
-    @DisplayName("이메일 인증 코드를 검증하여 자체 회원가입(inhouse signup)을 완료한다.")
+    @DisplayName("이메일 인증 코드를 검증 하여 자체 회원가입(inhouse signup)을 완료한다.")
     public void completeSignUp_success() throws Exception {
         var testInputSignupDto =
                 SignupDto.builder()
@@ -171,5 +172,44 @@ public class AuthServiceImplTest {
 
         log.info(objectMapper.writeValueAsString(signupCompleteResult));
         assertEquals(UserStatusType.VERIFIED, signupCompleteResult.getUserStatus());
+    }
+
+    @Test
+    @DisplayName("회원 관리 완료 처리 중 RuntimeException이 발생 된 것에 대한 처리 확인")
+    public void signupCompleteErrorTest() {
+        var testResultMailDto =
+                MailValidationDto.builder()
+                        .emailVerificationEntityId(1L)
+                        .userInfoId(1L)
+                        .validationStatus("CONFIRMED")
+                        .build();
+
+        when(mailValidationService.validateMailCode(any(), any())).thenReturn(testResultMailDto);
+
+        when(userRepository.findById(any())).thenThrow(new NoSuchElementException());
+
+        var exception =
+                assertThrows(PointShopAuthException.class,() -> this.authService.completeSignUp(1L, "string"));
+
+        assertEquals(PointShopAuthErrorCode.SIGNUP_COMPLETE_ERROR.getErrorMessage(), exception.getErrorMessage());
+    }
+
+    @Test
+    @DisplayName("내부에서 PointShopAuthException이 발생 된 것에 대한 처리가 있어야 한다.")
+    public void internalPointShopAuthExceptionTest() {
+        var testResultMailDto =
+                MailValidationDto.builder()
+                        .emailVerificationEntityId(1L)
+                        .userInfoId(1L)
+                        .validationStatus("CODE_CREATED_BUT_NOT_SENT") //TODO: 메일이 발송되지 않앗음을 의미하며,  아직 정의되지 않은 상태 이며, 이에 대한 처리가 없음.
+                        .build();
+
+        when(mailValidationService.validateMailCode(any(), any())).thenReturn(testResultMailDto);
+
+
+        var exception =
+                assertThrows(PointShopAuthException.class,() -> this.authService.completeSignUp(1L, "string"));
+
+        assertEquals(PointShopAuthErrorCode.MAIL_VERIFICATION_ERROR.getErrorMessage(), exception.getErrorMessage());
     }
 }
