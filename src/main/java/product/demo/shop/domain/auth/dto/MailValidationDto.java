@@ -18,7 +18,7 @@ public class MailValidationDto {
     private Long emailVerificationEntityId;
     private String validationStatus;
 
-    public static MailValidationDto fromMailValidRequest(
+    public static MailValidationDto makeValidationCodeFromMailValidRequest(
             MailValidationRequest mailValidationRequest) {
         var dateBytes =
                 mailValidationRequest

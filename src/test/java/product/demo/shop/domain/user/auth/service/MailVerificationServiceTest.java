@@ -46,7 +46,7 @@ public class MailVerificationServiceTest {
     @DisplayName("검증코드 Email 전송 로직 성공")
     public void makeMailValidation() throws Exception {
         var testRequest = MailValidationRequest.of("dlswp113@gmail.com", 1L);
-        var testValidDto = MailValidationDto.fromMailValidRequest(testRequest);
+        var testValidDto = MailValidationDto.makeValidationCodeFromMailValidRequest(testRequest);
         var testSendEmail = EmailVerificationEntity.fromMailValidationDto(testValidDto, 180);
         // given
         doNothing().when(mailService).sendMail(any());

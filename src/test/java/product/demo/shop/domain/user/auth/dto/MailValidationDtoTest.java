@@ -26,7 +26,7 @@ public class MailValidationDtoTest {
     public void fromMailValidRequestTest_Success() throws Exception {
         var result =
                 assertDoesNotThrow(
-                        () -> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
+                        () -> MailValidationDto.makeValidationCodeFromMailValidRequest(testMailValidationRequest));
 
         log.info(">>>> " + testObjectMapper.writeValueAsString(result));
         assertNotNull(result.getMailValidationUrl());
@@ -42,7 +42,7 @@ public class MailValidationDtoTest {
     public void toSignupResponseTest() {
         var mailValidationDto =
                 assertDoesNotThrow(
-                        () -> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
+                        () -> MailValidationDto.makeValidationCodeFromMailValidRequest(testMailValidationRequest));
 
         var result = mailValidationDto.toSignupResponse("SUCCESS");
         assertNotNull(result.getEmail());

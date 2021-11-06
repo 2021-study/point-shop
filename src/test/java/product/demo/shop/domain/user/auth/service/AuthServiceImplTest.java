@@ -76,7 +76,7 @@ public class AuthServiceImplTest {
                         new BCryptPasswordEncoder());
 
         var testOutputMailValidationDto =
-                MailValidationDto.fromMailValidRequest(
+                MailValidationDto.makeValidationCodeFromMailValidRequest(
                         MailValidationRequest.of("dlswp113@gmail.com", 1L));
         testOutputMailValidationDto.setEmailVerificationEntityId(2L);
 

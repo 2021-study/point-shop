@@ -25,7 +25,7 @@ public class MailValidationServiceImpl implements MailValidationService {
     @Override
     public MailValidationDto makeMailValidation(MailValidationRequest validationRequest) {
         try {
-            var mailDto = MailValidationDto.fromMailValidRequest(validationRequest);
+            var mailDto = MailValidationDto.makeValidationCodeFromMailValidRequest(validationRequest);
 
             var savedEmail =
                     emailVerificationRepository.save(
