@@ -117,8 +117,7 @@ public class UserGradeTest {
                 .phone("010-1111-1111")
                 .password("password")
                 .address("address")
-                .emailVerificationStatus("READY")
-                .userStatusCode("0001")
+                .userStatus("CONFIRMED")
                 .build();
     }
 }

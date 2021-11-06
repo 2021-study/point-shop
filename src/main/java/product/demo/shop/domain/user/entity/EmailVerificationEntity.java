@@ -31,4 +31,7 @@ public class EmailVerificationEntity extends AuditEntity {
 
     @Column
     private LocalDateTime expiredDate;
+
+    @Column
+    private String verificationCodeStatus;
 }

@@ -51,9 +51,6 @@ public class UserEntity extends AuditEntity {
     private String password; // TODO : Password는 단방향 해싱이 되어야 한다.
 
     @Column
-    private String emailVerificationStatus;
-
-    @Column
-    private String userStatusCode;
+    private String userStatus;
 
 }
