@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import product.demo.shop.domain.auth.dto.MailValidationDto;
 import product.demo.shop.domain.auth.dto.SignupDto;
@@ -41,6 +42,10 @@ import static org.mockito.Mockito.when;
 public class AuthServiceImplTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     @Mock private UserRepository userRepository;
@@ -94,6 +99,8 @@ public class AuthServiceImplTest {
         when(mailValidationService.makeMailValidation(any())).thenReturn(
                 testOutputMailValidationDto
         );
+
+        when(passwordEncoder.encode(any())).thenReturn("아무거나");
 
         var testResult =
                 assertDoesNotThrow(()->this.authService.newUserSignUp(testInputSignupDto));

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import product.demo.shop.domain.auth.dto.responses.SignUpCompleteResponse;
 import product.demo.shop.domain.auth.service.AuthService;
 import product.demo.shop.domain.auth.service.MailValidationService;
 import product.demo.shop.domain.auth.dto.MailValidationDto;
@@ -28,14 +29,14 @@ public class AuthController {
 
     @PostMapping(path = "/sign-up")
     public ResponseEntity<SignupResponse> signUp(@RequestBody SignupRequest signupRequest) {
-        return ResponseEntity.ok(this.authService.newUserSignUp(SignupDto.toSignupDto(signupRequest)).toSignupResponse());
+        return ResponseEntity.ok(this.authService.newUserSignUp(SignupDto.toSignupDto(signupRequest)).toSignupResponse("SUCCESS"));
     }
 
     @GetMapping(path = "/verify/{userInfoId}/{tokenValue}")
-    public ResponseEntity<MailValidationDto> validationNewUser(
+    public ResponseEntity<SignUpCompleteResponse> validationNewUser(
             @PathVariable Long userInfoId,
             @PathVariable String tokenValue){
-        return ResponseEntity.ok(this.mailValidationService.validateMailCode(userInfoId, tokenValue));
+        return ResponseEntity.ok(this.authService.completeSignUp(userInfoId, tokenValue));
     }
 
 //    @PostMapping(path="/stand-alone-sign-in")

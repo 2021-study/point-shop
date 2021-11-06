@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                     .addHeaderWriter(
                         new StaticHeadersWriter("X-Content-Security-Policy", "script-src 'self'")
-                    ).frameOptions().disable();
+                    ).frameOptions().disable()
+                .and();
     }
 }

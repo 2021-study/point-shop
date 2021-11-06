@@ -96,10 +96,10 @@ public class CustomUserDetailServiceTest {
 
         var exception =
                 assertThrows(
-                        PointShopAuthException.class,
+                        UsernameNotFoundException.class,
                         () -> this.userDetailsService.loadUserByUsername("jay"));
-        log.info(exception.getErrorMessage());
+        log.info(exception.getMessage());
 
-        assertEquals(PointShopAuthErrorCode.USER_NOT_EXISTS.getErrorMessage(), exception.getErrorMessage());
+//        assertEquals(PointShopAuthErrorCode.USER_NOT_EXISTS.getErrorMessage(), exception.getErrorMessage());
     }
 }

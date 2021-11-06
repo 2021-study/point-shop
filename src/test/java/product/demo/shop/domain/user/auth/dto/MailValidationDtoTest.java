@@ -39,10 +39,10 @@ public class MailValidationDtoTest {
     public void toSignupResponseTest() {
         var mailValidationDto = assertDoesNotThrow(()-> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
 
-        var result = mailValidationDto.toSignupResponse();
+        var result = mailValidationDto.toSignupResponse("SUCCESS");
         assertNotNull(result.getEmail());
         assertNotNull(result.getUserInfoId());
-        assertNotNull(result.getVerificationUrl());
+        assertNotNull(result.getStatus());
     }
 
 

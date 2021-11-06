@@ -11,10 +11,12 @@ import product.demo.shop.domain.auth.exception.PointShopAuthException;
 import product.demo.shop.domain.user.entity.EmailVerificationEntity;
 import product.demo.shop.domain.user.repository.jpa.EmailVerificationRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MailValidationServiceImpl implements MailValidationService{
 
     private final MailService mailService;

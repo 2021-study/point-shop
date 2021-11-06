@@ -1,17 +1,17 @@
 package product.demo.shop.domain.auth.dto.requests;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+@JsonDeserialize(builder = SignupRequest.SignupRequestBuilder.class)
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class SignupRequest {
     @Email
     @NotNull
@@ -31,4 +31,10 @@ public class SignupRequest {
 
     @NotNull
     private String address;
+
+    @JsonPOJOBuilder(withPrefix = "")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class SignupRequestBuilder{
+
+    }
 }

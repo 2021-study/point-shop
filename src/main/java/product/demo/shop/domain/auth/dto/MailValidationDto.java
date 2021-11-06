@@ -43,7 +43,7 @@ public class MailValidationDto {
         this.emailVerificationEntityId = emailVerificationEntityId;
     }
 
-    public SignupResponse toSignupResponse() {
-        return SignupResponse.of(this.email, this.userInfoId, this.mailValidationUrl);
+    public SignupResponse toSignupResponse(String status) {
+        return SignupResponse.of(this.email, this.userInfoId, status);
     }
 }

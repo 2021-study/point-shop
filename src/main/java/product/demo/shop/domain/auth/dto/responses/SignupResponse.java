@@ -17,10 +17,9 @@ public class SignupResponse {
     @NotNull
     private Long userInfoId;
 
-    @NotNull
-    private String verificationUrl;
+    private String status;
 
-    public static SignupResponse of(String email, Long userInfoId, String verificationUrl){
-        return new SignupResponse(email, userInfoId, verificationUrl);
+    public static SignupResponse of(String email, Long userInfoId, String status){
+        return new SignupResponse(email, userInfoId, status);
     }
 }

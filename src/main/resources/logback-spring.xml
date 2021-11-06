@@ -24,6 +24,7 @@
     </rollingPolicy>
   </appender>
 
+  <logger name="org.hibernate.type" level="trace" />
 
   <root level="INFO">
     <appender-ref ref="CONSOLE" />

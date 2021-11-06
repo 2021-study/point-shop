@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     }
                     return makeUserDetail(user);
                 })
-                .orElseThrow(()->new PointShopAuthException(PointShopAuthErrorCode.USER_NOT_EXISTS, "["+userAccountId+"]는 존재하지 않습니다."));
+                .orElseThrow(()->new UsernameNotFoundException("["+userAccountId+"]는 존재하지 않습니다."));
     }
 
     private User makeUserDetail(UserEntity userEntity) {

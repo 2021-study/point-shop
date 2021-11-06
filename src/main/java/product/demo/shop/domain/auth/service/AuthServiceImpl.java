@@ -16,8 +16,11 @@ import product.demo.shop.domain.grade.repository.UserGradeRepository;
 import product.demo.shop.domain.user.entity.UserEntity;
 import product.demo.shop.domain.user.repository.UserRepository;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthServiceImpl implements AuthService {
 
 //    private final UserDetailsService customUserDetailsService;
@@ -61,6 +64,7 @@ public class AuthServiceImpl implements AuthService {
                     && validateResult.getValidationStatus().equals("CONFIRMED")) {
                 var findUser = this.userRepository.findById(userInfoId).orElseThrow();
                 findUser.changeUserStatusConfirmed();
+                this.userRepository.save(findUser);
                 return new SignUpCompleteResponse(findUser.getUserAccountId(), findUser.getUserStatus());
             } else{
                 // 예외 처리가 귀찮아서 이렇게 둡니다.

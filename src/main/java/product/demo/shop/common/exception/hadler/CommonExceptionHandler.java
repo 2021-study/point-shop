@@ -1,12 +1,15 @@
-package product.demo.shop.common.exception.controller;
+package product.demo.shop.common.exception.hadler;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import product.demo.shop.common.exception.CommonErrorCode;
 import product.demo.shop.common.exception.CommonErrorResponse;
 import product.demo.shop.common.exception.CommonException;
+import product.demo.shop.domain.auth.exception.PointShopAuthErrorCode;
 import product.demo.shop.domain.auth.exception.PointShopAuthException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +24,17 @@ public class CommonExceptionHandler {
             }
     )
     @ResponseBody
-    public ResponseEntity<CommonErrorResponse> handleTestException(CommonException e, HttpServletRequest request) {
+    public ResponseEntity<CommonErrorResponse> handleCommonException(CommonException e, HttpServletRequest request) {
         return new ResponseEntity(CommonErrorResponse.createErrorResponse(e), e.getErrorStatus());
+    }
+
+
+    @ExceptionHandler(
+            {Exception.class}
+    )
+    public ResponseEntity<CommonErrorResponse> handleException(Exception e, HttpServletRequest request) {
+        request.getSession();
+        var boxedException = new CommonException(CommonErrorCode.UNKNOWN_ERROR,e);
+        return new ResponseEntity(CommonErrorResponse.createErrorResponse(boxedException), boxedException.getErrorStatus());
     }
 }
