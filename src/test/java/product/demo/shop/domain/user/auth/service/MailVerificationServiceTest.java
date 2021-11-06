@@ -36,11 +36,11 @@ import static org.mockito.Mockito.when;
 public class MailVerificationServiceTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    @Autowired @Mock private MailService mailService;
+    @Mock private MailService mailService;
 
-    @Autowired @Mock private EmailVerificationRepository emailVerificationRepository;
+    @Mock private EmailVerificationRepository emailVerificationRepository;
 
-    @InjectMocks @Autowired private MailValidationServiceImpl mailValidationService;
+    @InjectMocks private MailValidationServiceImpl mailValidationService;
 
     @Test
     @DisplayName("검증코드 Email 전송 로직 성공")

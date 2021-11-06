@@ -34,9 +34,9 @@ public class CustomUserDetailServiceTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Autowired @Mock private UserRepository userRepository;
+    @Mock private UserRepository userRepository;
 
-    @Autowired @InjectMocks private CustomUserDetailsService userDetailsService;
+    @InjectMocks private CustomUserDetailsService userDetailsService;
 
     @Test
     @DisplayName("등록되어 있는 유저에 대한 로그인 성공처리(ROLE_USER)")

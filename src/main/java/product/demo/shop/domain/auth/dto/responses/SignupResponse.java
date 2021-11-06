@@ -3,12 +3,14 @@ package product.demo.shop.domain.auth.dto.responses;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@NoArgsConstructor
 public class SignupResponse {
     @Email @NotNull private String email;
 

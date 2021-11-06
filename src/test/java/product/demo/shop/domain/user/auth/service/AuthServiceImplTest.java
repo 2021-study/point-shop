@@ -44,15 +44,15 @@ public class AuthServiceImplTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Autowired @Mock PasswordEncoder passwordEncoder;
+    @Mock PasswordEncoder passwordEncoder;
 
-    @Autowired @Mock private UserRepository userRepository;
+    @Mock private UserRepository userRepository;
 
-    @Autowired @Mock private UserGradeRepository userGradeRepository;
+    @Mock private UserGradeRepository userGradeRepository;
 
-    @Autowired @Mock private MailValidationService mailValidationService;
+    @Mock private MailValidationService mailValidationService;
 
-    @Autowired @InjectMocks private AuthServiceImpl authService;
+    @InjectMocks private AuthServiceImpl authService;
 
     @Test
     @DisplayName("신규 유저 등록 성공 처리")

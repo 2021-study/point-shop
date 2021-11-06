@@ -12,16 +12,86 @@
 == exception-test
 테스트 전용 API 입니다.(Exception 발생시 Error 포맷에 맞는 Response 응답 여부 확인)
 
-include::{snippets}/exception-test/curl-request.adoc[]
+include::{snippets}/unknown-error-code-test/curl-request.adoc[]
 
-include::{snippets}/exception-test/http-request.adoc[]
+include::{snippets}/unknown-error-code-test/http-request.adoc[]
 
-include::{snippets}/exception-test/http-response.adoc[]
+include::{snippets}/unknown-error-code-test/http-response.adoc[]
 
-include::{snippets}/exception-test/httpie-request.adoc[]
+include::{snippets}/unknown-error-code-test/httpie-request.adoc[]
 
-include::{snippets}/exception-test/request-body.adoc[]
+include::{snippets}/unknown-error-code-test/request-body.adoc[]
 
-include::{snippets}/exception-test/response-body.adoc[]
+include::{snippets}/unknown-error-code-test/response-body.adoc[]
 
-include::{snippets}/exception-test/response-fields.adoc[]
+include::{snippets}/unknown-error-code-test/response-fields.adoc[]
+
+== common-exception-with-description
+
+include::{snippets}/common-exception-with-description/curl-request.adoc[]
+
+include::{snippets}/common-exception-with-description/http-request.adoc[]
+
+include::{snippets}/common-exception-with-description/http-response.adoc[]
+
+include::{snippets}/common-exception-with-description/httpie-request.adoc[]
+
+include::{snippets}/common-exception-with-description/request-body.adoc[]
+
+include::{snippets}/common-exception-with-description/response-body.adoc[]
+
+include::{snippets}/common-exception-with-description/response-fields.adoc[]
+
+== common-exception-with-description-and-throwable
+
+include::{snippets}/common-exception-with-description-and-throwable/curl-request.adoc[]
+
+include::{snippets}/common-exception-with-description-and-throwable/http-request.adoc[]
+
+include::{snippets}/common-exception-with-description-and-throwable/http-response.adoc[]
+
+include::{snippets}/common-exception-with-description-and-throwable/httpie-request.adoc[]
+
+include::{snippets}/common-exception-with-description-and-throwable/request-body.adoc[]
+
+include::{snippets}/common-exception-with-description-and-throwable/response-body.adoc[]
+
+include::{snippets}/common-exception-with-description-and-throwable/response-fields.adoc[]
+
+[[auth]]
+
+== /api/v1/auth/sign-up
+자체 구현 로그인 API
+
+include::{snippets}/register-new-user-in-house-sign-up/curl-request.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/http-request.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/http-response.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/httpie-request.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/request-body.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/request-fields.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/response-body.adoc[]
+
+include::{snippets}/register-new-user-in-house-sign-up/response-fields.adoc[]
+
+== /api/v1/auth/verify/{userInfoId}/{tokenValue}
+메일 인증 처리 API
+
+include::{snippets}/validation-new-user-test/curl-request.adoc[]
+
+include::{snippets}/validation-new-user-test/http-request.adoc[]
+
+include::{snippets}/validation-new-user-test/http-response.adoc[]
+
+include::{snippets}/validation-new-user-test/httpie-request.adoc[]
+
+include::{snippets}/validation-new-user-test/path-parameters.adoc[]
+
+include::{snippets}/validation-new-user-test/response-body.adoc[]
+
+include::{snippets}/validation-new-user-test/response-fields.adoc[]
