@@ -43,45 +43,41 @@ public class AuthServiceImplTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    @Autowired
-    @Mock
-    PasswordEncoder passwordEncoder;
+    @Autowired @Mock PasswordEncoder passwordEncoder;
 
-    @Autowired
-    @Mock private UserRepository userRepository;
+    @Autowired @Mock private UserRepository userRepository;
 
-    @Autowired
-    @Mock private UserGradeRepository userGradeRepository;
+    @Autowired @Mock private UserGradeRepository userGradeRepository;
 
-    @Autowired
-    @Mock private MailValidationService mailValidationService;
+    @Autowired @Mock private MailValidationService mailValidationService;
 
-    @Autowired
-    @InjectMocks private AuthServiceImpl authService;
+    @Autowired @InjectMocks private AuthServiceImpl authService;
 
     @Test
     @DisplayName("신규 유저 등록 성공 처리")
     public void newUserSignUp_success() {
-        var testInputSignupDto = SignupDto.builder()
-                .email("dlswp113@gmail.com")
-                .userAccountId("jay")
-                .address("사랑시고백구행복동")
-                .password("1234")
-                .phoneNumber("010-0000-000")
-                .name("hwang")
-                .build();
+        var testInputSignupDto =
+                SignupDto.builder()
+                        .email("dlswp113@gmail.com")
+                        .userAccountId("jay")
+                        .address("사랑시고백구행복동")
+                        .password("1234")
+                        .phoneNumber("010-0000-000")
+                        .name("hwang")
+                        .build();
 
-        var sampleUserEntity = UserEntity.fromUserDtoWithStandAlone(testInputSignupDto,UserGradeEntity.builder()
-                .userGradeId(1L)
-                .gradeName(GradeName.BRONZE)
-                .build()
-            , new BCryptPasswordEncoder()
-        );
+        var sampleUserEntity =
+                UserEntity.fromUserDtoWithStandAlone(
+                        testInputSignupDto,
+                        UserGradeEntity.builder()
+                                .userGradeId(1L)
+                                .gradeName(GradeName.BRONZE)
+                                .build(),
+                        new BCryptPasswordEncoder());
 
-        var testOutputMailValidationDto = MailValidationDto.fromMailValidRequest(MailValidationRequest.of(
-                "dlswp113@gmail.com",
-                1L
-        ));
+        var testOutputMailValidationDto =
+                MailValidationDto.fromMailValidRequest(
+                        MailValidationRequest.of("dlswp113@gmail.com", 1L));
         testOutputMailValidationDto.setEmailVerificationEntityId(2L);
 
         // given
@@ -96,14 +92,13 @@ public class AuthServiceImplTest {
 
         when(userRepository.save(any())).thenReturn(sampleUserEntity);
 
-        when(mailValidationService.makeMailValidation(any())).thenReturn(
-                testOutputMailValidationDto
-        );
+        when(mailValidationService.makeMailValidation(any()))
+                .thenReturn(testOutputMailValidationDto);
 
         when(passwordEncoder.encode(any())).thenReturn("아무거나");
 
         var testResult =
-                assertDoesNotThrow(()->this.authService.newUserSignUp(testInputSignupDto));
+                assertDoesNotThrow(() -> this.authService.newUserSignUp(testInputSignupDto));
 
         assertNotNull(testResult);
         assertNotNull(testResult.getTokenString());
@@ -112,64 +107,69 @@ public class AuthServiceImplTest {
 
     @Test
     @DisplayName("기존 등록된 유저로 신규 등록 차단")
-    public void newUserSignUp_duplicated(){
-        var testInputSignupDto = SignupDto.builder()
-                .email("dlswp113@gmail.com")
-                .userAccountId("jay")
-                .address("사랑시고백구행복동")
-                .password("1234")
-                .phoneNumber("010-0000-000")
-                .name("hwang")
-                .build();
+    public void newUserSignUp_duplicated() {
+        var testInputSignupDto =
+                SignupDto.builder()
+                        .email("dlswp113@gmail.com")
+                        .userAccountId("jay")
+                        .address("사랑시고백구행복동")
+                        .password("1234")
+                        .phoneNumber("010-0000-000")
+                        .name("hwang")
+                        .build();
 
         // given
         when(userRepository.existsByUserAccountId(any())).thenReturn(true);
 
         var resultException =
-                assertThrows(PointShopAuthException.class,()->this.authService.newUserSignUp(testInputSignupDto));
+                assertThrows(
+                        PointShopAuthException.class,
+                        () -> this.authService.newUserSignUp(testInputSignupDto));
 
         log.info(resultException.toString());
         assertEquals(HttpStatus.BAD_REQUEST, resultException.getErrorStatus());
-        assertEquals(PointShopAuthErrorCode.EXIST_USER.getErrorMessage(), resultException.getErrorMessage());
+        assertEquals(
+                PointShopAuthErrorCode.EXIST_USER.getErrorMessage(),
+                resultException.getErrorMessage());
     }
 
     @Test
     @DisplayName("이메일 인증 코드를 검증하여 자체 회원가입(inhouse signup)을 완료한다.")
-    public void completeSignUp_success() throws Exception{
-        var testInputSignupDto = SignupDto.builder()
-                .email("dlswp113@gmail.com")
-                .userAccountId("jay")
-                .address("사랑시고백구행복동")
-                .password("1234")
-                .phoneNumber("010-0000-000")
-                .name("hwang")
-                .build();
+    public void completeSignUp_success() throws Exception {
+        var testInputSignupDto =
+                SignupDto.builder()
+                        .email("dlswp113@gmail.com")
+                        .userAccountId("jay")
+                        .address("사랑시고백구행복동")
+                        .password("1234")
+                        .phoneNumber("010-0000-000")
+                        .name("hwang")
+                        .build();
 
-        var testResultMailDto = MailValidationDto.builder()
-                .emailVerificationEntityId(1L)
-                .userInfoId(1L)
-                .validationStatus("CONFIRMED")
-                .build();
+        var testResultMailDto =
+                MailValidationDto.builder()
+                        .emailVerificationEntityId(1L)
+                        .userInfoId(1L)
+                        .validationStatus("CONFIRMED")
+                        .build();
 
-        var sampleUserEntity = UserEntity.fromUserDtoWithStandAlone(testInputSignupDto,UserGradeEntity.builder()
-                .userGradeId(1L)
-                .gradeName(GradeName.BRONZE)
-                .build()
-        ,new BCryptPasswordEncoder());
+        var sampleUserEntity =
+                UserEntity.fromUserDtoWithStandAlone(
+                        testInputSignupDto,
+                        UserGradeEntity.builder()
+                                .userGradeId(1L)
+                                .gradeName(GradeName.BRONZE)
+                                .build(),
+                        new BCryptPasswordEncoder());
 
-        when(mailValidationService.validateMailCode(any(), any())).thenReturn(
-                testResultMailDto
-        );
+        when(mailValidationService.validateMailCode(any(), any())).thenReturn(testResultMailDto);
 
-        when(userRepository.findById(any())).thenReturn(Optional.of(
-                sampleUserEntity
-        ));
+        when(userRepository.findById(any())).thenReturn(Optional.of(sampleUserEntity));
 
         var signupCompleteResult =
-                assertDoesNotThrow(()->this.authService.completeSignUp(1L, "string"));
+                assertDoesNotThrow(() -> this.authService.completeSignUp(1L, "string"));
 
         log.info(objectMapper.writeValueAsString(signupCompleteResult));
-        assertEquals(UserStatusType.VERIFIED ,signupCompleteResult.getUserStatus());
+        assertEquals(UserStatusType.VERIFIED, signupCompleteResult.getUserStatus());
     }
-
 }

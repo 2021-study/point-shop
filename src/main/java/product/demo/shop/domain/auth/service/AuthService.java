@@ -7,5 +7,6 @@ import product.demo.shop.domain.auth.dto.SignupDto;
 public interface AuthService {
 
     MailValidationDto newUserSignUp(SignupDto signupDto);
+
     SignUpCompleteResponse completeSignUp(Long userInfoId, String tokenString);
 }

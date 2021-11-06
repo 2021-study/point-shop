@@ -23,23 +23,25 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userAccountId) throws UsernameNotFoundException {
-        return userRepository.findByUserAccountId(userAccountId)
-                .map(user -> {
-                    if(!user.getUserStatus().equals(UserStatusType.VERIFIED)){
-                        throw new PointShopAuthException(PointShopAuthErrorCode.NOT_YET_EMAIL_VERIFIED); // email 미인증.
-                    }
-                    return makeUserDetail(user);
-                })
-                .orElseThrow(()->new UsernameNotFoundException("["+userAccountId+"]는 존재하지 않습니다."));
+        return userRepository
+                .findByUserAccountId(userAccountId)
+                .map(
+                        user -> {
+                            if (!user.getUserStatus().equals(UserStatusType.VERIFIED)) {
+                                throw new PointShopAuthException(
+                                        PointShopAuthErrorCode
+                                                .NOT_YET_EMAIL_VERIFIED); // email 미인증.
+                            }
+                            return makeUserDetail(user);
+                        })
+                .orElseThrow(
+                        () -> new UsernameNotFoundException("[" + userAccountId + "]는 존재하지 않습니다."));
     }
 
     private User makeUserDetail(UserEntity userEntity) {
         // 일단 권한은 USER로 하드코딩 박아놓는다.
         var grantedAuthority = new SimpleGrantedAuthority("ROLE_USER");
         return new User(
-                userEntity.getUserAccountId(),
-                userEntity.getPassword(),
-                List.of(grantedAuthority)
-        );
+                userEntity.getUserAccountId(), userEntity.getPassword(), List.of(grantedAuthority));
     }
 }

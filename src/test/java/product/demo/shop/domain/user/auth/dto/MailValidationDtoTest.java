@@ -20,12 +20,15 @@ public class MailValidationDtoTest {
             MailValidationRequest.of("dlswp113@gmail.com", 1L);
 
     private ObjectMapper testObjectMapper = new ObjectMapper();
+
     @Test
     @DisplayName("메일 인증코드 생성 정상 처리 확인 테스트")
-    public void fromMailValidRequestTest_Success() throws Exception{
-        var result = assertDoesNotThrow(()-> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
+    public void fromMailValidRequestTest_Success() throws Exception {
+        var result =
+                assertDoesNotThrow(
+                        () -> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
 
-        log.info(">>>> "+testObjectMapper.writeValueAsString(result));
+        log.info(">>>> " + testObjectMapper.writeValueAsString(result));
         assertNotNull(result.getMailValidationUrl());
         assertNotNull(result.getTokenString());
 
@@ -37,13 +40,13 @@ public class MailValidationDtoTest {
     @Test
     @DisplayName("SignupResponse 변환 테스트")
     public void toSignupResponseTest() {
-        var mailValidationDto = assertDoesNotThrow(()-> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
+        var mailValidationDto =
+                assertDoesNotThrow(
+                        () -> MailValidationDto.fromMailValidRequest(testMailValidationRequest));
 
         var result = mailValidationDto.toSignupResponse("SUCCESS");
         assertNotNull(result.getEmail());
         assertNotNull(result.getUserInfoId());
         assertNotNull(result.getStatus());
     }
-
-
 }

@@ -5,5 +5,6 @@ import product.demo.shop.domain.auth.dto.requests.MailValidationRequest;
 
 public interface MailValidationService {
     MailValidationDto makeMailValidation(MailValidationRequest validationRequest);
+
     MailValidationDto validateMailCode(Long userInfoId, String tokenString);
 }

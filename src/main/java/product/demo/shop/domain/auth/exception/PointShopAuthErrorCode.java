@@ -12,8 +12,7 @@ public enum PointShopAuthErrorCode implements ErrorCode {
     MAIL_VERIFICATION_CODE_EXPIRED(HttpStatus.BAD_REQUEST, "인증코드 만료입니다. 다시 재인증 해주세요"),
     SIGNUP_COMPLETE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "가입 완료 처리 중 에러가 발생하였습니다."),
     NOT_YET_EMAIL_VERIFIED(HttpStatus.BAD_REQUEST, "아직 이메일 인증이 완료되지 않앗습니다."),
-    USER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "입력한 유저는 존재하지 않습니다.")
-    ;
+    USER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "입력한 유저는 존재하지 않습니다.");
 
     private HttpStatus errorStatus;
     private String errorMessage;

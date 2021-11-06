@@ -86,7 +86,9 @@ public class CustomUserDetailServiceTest {
                         PointShopAuthException.class,
                         () -> this.userDetailsService.loadUserByUsername("jay"));
         log.info(objectMapper.writeValueAsString(exception));
-        assertEquals(PointShopAuthErrorCode.NOT_YET_EMAIL_VERIFIED.getErrorMessage(), exception.getErrorMessage());
+        assertEquals(
+                PointShopAuthErrorCode.NOT_YET_EMAIL_VERIFIED.getErrorMessage(),
+                exception.getErrorMessage());
     }
 
     @Test
@@ -100,6 +102,7 @@ public class CustomUserDetailServiceTest {
                         () -> this.userDetailsService.loadUserByUsername("jay"));
         log.info(exception.getMessage());
 
-//        assertEquals(PointShopAuthErrorCode.USER_NOT_EXISTS.getErrorMessage(), exception.getErrorMessage());
+        //        assertEquals(PointShopAuthErrorCode.USER_NOT_EXISTS.getErrorMessage(),
+        // exception.getErrorMessage());
     }
 }

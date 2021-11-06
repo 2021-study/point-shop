@@ -22,26 +22,27 @@ import static product.demo.shop.domain.auth.controller.AuthController.AUTH_API_P
 @RequiredArgsConstructor
 @RequestMapping(AUTH_API_PATH)
 public class AuthController {
-    public static final String AUTH_API_PATH ="/api/v1/auth";
+    public static final String AUTH_API_PATH = "/api/v1/auth";
 
     private final AuthService authService;
-    private final MailValidationService mailValidationService;
 
     @PostMapping(path = "/sign-up")
     public ResponseEntity<SignupResponse> signUp(@RequestBody SignupRequest signupRequest) {
-        return ResponseEntity.ok(this.authService.newUserSignUp(SignupDto.toSignupDto(signupRequest)).toSignupResponse("SUCCESS"));
+        return ResponseEntity.ok(
+                this.authService
+                        .newUserSignUp(SignupDto.toSignupDto(signupRequest))
+                        .toSignupResponse("SUCCESS"));
     }
 
     @GetMapping(path = "/verify/{userInfoId}/{tokenValue}")
     public ResponseEntity<SignUpCompleteResponse> validationNewUser(
-            @PathVariable Long userInfoId,
-            @PathVariable String tokenValue){
+            @PathVariable Long userInfoId, @PathVariable String tokenValue) {
         return ResponseEntity.ok(this.authService.completeSignUp(userInfoId, tokenValue));
     }
 
-//    @PostMapping(path="/stand-alone-sign-in")
-//    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
-//
-//        return ResponseEntity.ok(SignInResponse.class);
-//    }
+    //    @PostMapping(path="/stand-alone-sign-in")
+    //    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
+    //
+    //        return ResponseEntity.ok(SignInResponse.class);
+    //    }
 }

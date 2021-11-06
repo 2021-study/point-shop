@@ -13,28 +13,19 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Builder
 public class SignupRequest {
-    @Email
-    @NotNull
-    private String email;
+    @Email @NotNull private String email;
 
-    @NotNull
-    private String userAccountId;
+    @NotNull private String userAccountId;
 
-    @NotNull
-    private String name;
+    @NotNull private String name;
 
-    @NotNull
-    private String password;
+    @NotNull private String password;
 
-    @NotNull
-    private String phoneNumber;
+    @NotNull private String phoneNumber;
 
-    @NotNull
-    private String address;
+    @NotNull private String address;
 
     @JsonPOJOBuilder(withPrefix = "")
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class SignupRequestBuilder{
-
-    }
+    public static class SignupRequestBuilder {}
 }

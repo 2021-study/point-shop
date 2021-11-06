@@ -13,7 +13,6 @@ import product.demo.shop.healthcheck.HealthCheckController;
 
 import static product.demo.shop.domain.auth.controller.AuthController.AUTH_API_PATH;
 
-
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,35 +22,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(customUserDetailsService)
-            .passwordEncoder(passwordEncoder);
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http
-                .csrf().disable()
-            .authorizeRequests()
-                .antMatchers(HealthCheckController.PING_PATH).permitAll()
-                .antMatchers(AUTH_API_PATH+"/sign-up").permitAll()
-                .antMatchers("/api/v1/auth/verify/{userInfoId}/{tokenValue}").permitAll()
-                .antMatchers(CommonController.DEFAULT_PATH).hasAnyRole("USER")
-                .anyRequest().authenticated()
-            .and()
+        http.csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers(HealthCheckController.PING_PATH)
+                .permitAll()
+                .antMatchers(AUTH_API_PATH + "/sign-up")
+                .permitAll()
+                .antMatchers("/api/v1/auth/verify/{userInfoId}/{tokenValue}")
+                .permitAll()
+                .antMatchers(CommonController.DEFAULT_PATH)
+                .hasAnyRole("USER")
+                .anyRequest()
+                .authenticated()
+                .and()
                 .formLogin()
                 .permitAll()
-            .and()
+                .and()
                 .userDetailsService(customUserDetailsService)
                 .oauth2Login()
-            .and()
-                .logout().permitAll()
-            .and()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
                 .headers()
-                    .addHeaderWriter(
-                        new StaticHeadersWriter("X-Content-Security-Policy", "script-src 'self'")
-                    ).frameOptions().disable()
+                .addHeaderWriter(
+                        new StaticHeadersWriter("X-Content-Security-Policy", "script-src 'self'"))
+                .frameOptions()
+                .disable()
                 .and();
     }
 }

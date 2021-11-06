@@ -18,8 +18,8 @@ public class MailValidationDto {
     private Long emailVerificationEntityId;
     private String validationStatus;
 
-
-    public static MailValidationDto fromMailValidRequest(MailValidationRequest mailValidationRequest){
+    public static MailValidationDto fromMailValidRequest(
+            MailValidationRequest mailValidationRequest) {
         var dateBytes =
                 mailValidationRequest
                         .getAppliedAt()
@@ -29,7 +29,11 @@ public class MailValidationDto {
 
         String tokenString = UUID.nameUUIDFromBytes(dateBytes).toString();
 
-        String validUrl = "http://localhost:8077/api/v1/auth/verify/"+mailValidationRequest.getUserInfoId()+"/"+tokenString;
+        String validUrl =
+                "http://localhost:8077/api/v1/auth/verify/"
+                        + mailValidationRequest.getUserInfoId()
+                        + "/"
+                        + tokenString;
 
         return MailValidationDto.builder()
                 .email(mailValidationRequest.getEmail())
@@ -39,7 +43,7 @@ public class MailValidationDto {
                 .build();
     }
 
-    public void setEmailVerificationEntityId(Long emailVerificationEntityId){
+    public void setEmailVerificationEntityId(Long emailVerificationEntityId) {
         this.emailVerificationEntityId = emailVerificationEntityId;
     }
 

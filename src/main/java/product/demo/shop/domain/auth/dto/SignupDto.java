@@ -31,7 +31,7 @@ public class SignupDto {
 
     private String emailVerificationUrl;
 
-    public static SignupDto toSignupDto(SignupRequest request){
+    public static SignupDto toSignupDto(SignupRequest request) {
         return SignupDto.builder()
                 .email(request.getEmail())
                 .userAccountId(request.getUserAccountId())

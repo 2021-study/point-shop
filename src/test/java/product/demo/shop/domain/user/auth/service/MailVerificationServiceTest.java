@@ -36,30 +36,25 @@ import static org.mockito.Mockito.when;
 public class MailVerificationServiceTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    @Autowired
-    @Mock
-    private MailService mailService;
+    @Autowired @Mock private MailService mailService;
 
-    @Autowired
-    @Mock
-    private EmailVerificationRepository emailVerificationRepository;
+    @Autowired @Mock private EmailVerificationRepository emailVerificationRepository;
 
-    @InjectMocks
-    @Autowired
-    private MailValidationServiceImpl mailValidationService;
+    @InjectMocks @Autowired private MailValidationServiceImpl mailValidationService;
 
     @Test
     @DisplayName("검증코드 Email 전송 로직 성공")
-    public void makeMailValidation() throws Exception{
+    public void makeMailValidation() throws Exception {
         var testRequest = MailValidationRequest.of("dlswp113@gmail.com", 1L);
         var testValidDto = MailValidationDto.fromMailValidRequest(testRequest);
         var testSendEmail = EmailVerificationEntity.fromMailValidationDto(testValidDto, 180);
-        //given
+        // given
         doNothing().when(mailService).sendMail(any());
         when(emailVerificationRepository.save(any())).thenReturn(testSendEmail);
 
         var result =
-                assertDoesNotThrow(()->this.mailValidationService.makeMailValidation(testRequest));
+                assertDoesNotThrow(
+                        () -> this.mailValidationService.makeMailValidation(testRequest));
 
         log.info(objectMapper.writeValueAsString(result));
         assertEquals("dlswp113@gmail.com", result.getEmail());
@@ -68,30 +63,30 @@ public class MailVerificationServiceTest {
 
     @Test
     @DisplayName("메일 인증 완료 로직 성공")
-    public void validateMailCode_success() {
-
-    }
+    public void validateMailCode_success() {}
 
     @Test
     @DisplayName("인증 코드 만료로 validateMailCode Failed")
     public void validateMailCode_expired() throws Exception {
-        var expiredEmailCode = EmailVerificationEntity.builder()
+        var expiredEmailCode =
+                EmailVerificationEntity.builder()
                         .userId(1L)
-                .verificationCode("test-Strings")
-                .expiredDate(LocalDateTime.now().minusDays(1L))
-                .emailVerificationCodeId(1L)
-                .verificationCodeStatus("CREATED")
-                .build();
+                        .verificationCode("test-Strings")
+                        .expiredDate(LocalDateTime.now().minusDays(1L))
+                        .emailVerificationCodeId(1L)
+                        .verificationCodeStatus("CREATED")
+                        .build();
 
-        when(emailVerificationRepository.findByUserIdAndVerificationCode(
-                1L,
-                "test-Strings"
-        )).thenReturn(Optional.of(expiredEmailCode));
+        when(emailVerificationRepository.findByUserIdAndVerificationCode(1L, "test-Strings"))
+                .thenReturn(Optional.of(expiredEmailCode));
 
-        var exception = assertThrows(
-                PointShopAuthException.class
-                , ()->this.mailValidationService.validateMailCode(1L, "test-Strings"));
+        var exception =
+                assertThrows(
+                        PointShopAuthException.class,
+                        () -> this.mailValidationService.validateMailCode(1L, "test-Strings"));
 
-        assertEquals(PointShopAuthErrorCode.MAIL_VERIFICATION_CODE_EXPIRED.getErrorMessage(), exception.getErrorMessage());
+        assertEquals(
+                PointShopAuthErrorCode.MAIL_VERIFICATION_CODE_EXPIRED.getErrorMessage(),
+                exception.getErrorMessage());
     }
 }

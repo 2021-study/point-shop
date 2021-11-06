@@ -14,11 +14,11 @@ public class MailValidationRequest {
     private Long userInfoId;
     private LocalDateTime appliedAt;
 
-    public static MailValidationRequest of(String email, Long userInfoId, LocalDateTime appliedAt){
+    public static MailValidationRequest of(String email, Long userInfoId, LocalDateTime appliedAt) {
         return new MailValidationRequest(email, userInfoId, appliedAt);
     }
 
-    public static MailValidationRequest of(String email, Long userInfoId){
+    public static MailValidationRequest of(String email, Long userInfoId) {
         return MailValidationRequest.of(email, userInfoId, LocalDateTime.now());
     }
 }
