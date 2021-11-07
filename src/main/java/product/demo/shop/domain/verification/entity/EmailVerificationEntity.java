@@ -30,4 +30,8 @@ public class EmailVerificationEntity extends AuditEntity {
 
     @Enumerated(EnumType.STRING)
     private VerificationCodeStatus verificationCodeStatus;
+
+    public void useCode(){
+        this.verificationCodeStatus = VerificationCodeStatus.CONFIRMED;
+    }
 }

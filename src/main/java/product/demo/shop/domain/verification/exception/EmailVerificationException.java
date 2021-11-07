@@ -8,4 +8,8 @@ public class EmailVerificationException extends CommonException {
                              Throwable throwable) {
         super(errorCode, throwable);
     }
+
+    public EmailVerificationException(ErrorCode errorCode) {
+        super(errorCode);
+    }
 }
