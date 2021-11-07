@@ -69,7 +69,7 @@ CREATE TABLE `tb_grade_policy` (
    `unit_of_measure`	varchar(12)	NULL	COMMENT '단위',
    `policy_name`	varchar(300)	NULL	COMMENT '정책 명',
    `applied_value`	decimal(10,5)	NULL	COMMENT '정책 적용 값',
-   `policy_status`	varchar(4)	NULL COMMENT '정책 상태',
+   `policy_status`	varchar(20)	NULL COMMENT '정책 상태',
    `created_at`	datetime	NULL COMMENT '생성일시',
    `created_by`	varchar(50)	NULL COMMENT '생성주체',
    `last_modified_at`	datetime	NULL COMMENT '최종수정일시',
