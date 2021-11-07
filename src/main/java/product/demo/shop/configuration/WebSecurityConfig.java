@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .authorizeRequests()
+                .antMatchers("/verify/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .csrf()

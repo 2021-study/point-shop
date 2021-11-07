@@ -1,12 +1,9 @@
-package product.demo.shop.domain.email.service;
+package product.demo.shop.domain.verification.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import product.demo.shop.domain.email.entity.EmailVerificationEntity;
-import product.demo.shop.domain.email.repository.EmailAuthenticationRepository;
-
-import java.util.Optional;
+import product.demo.shop.domain.verification.repository.EmailAuthenticationRepository;
 
 @RequiredArgsConstructor
 @Service

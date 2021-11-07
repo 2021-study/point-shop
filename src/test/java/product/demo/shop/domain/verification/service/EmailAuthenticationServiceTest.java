@@ -1,4 +1,4 @@
-package product.demo.shop.domain.email.service;
+package product.demo.shop.domain.verification.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,9 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import product.demo.shop.domain.email.exception.EmailVerificationErrorCode;
-import product.demo.shop.domain.email.exception.EmailVerificationException;
-import product.demo.shop.domain.email.repository.EmailAuthenticationRepository;
+import product.demo.shop.domain.verification.exception.EmailVerificationErrorCode;
+import product.demo.shop.domain.verification.exception.EmailVerificationException;
+import product.demo.shop.domain.verification.repository.EmailAuthenticationRepository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

@@ -1,4 +1,4 @@
-package product.demo.shop.domain.email.exception;
+package product.demo.shop.domain.verification.exception;
 
 import product.demo.shop.common.exception.CommonException;
 import product.demo.shop.common.exception.ErrorCode;

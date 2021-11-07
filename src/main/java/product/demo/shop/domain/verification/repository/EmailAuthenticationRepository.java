@@ -1,9 +1,8 @@
-package product.demo.shop.domain.email.repository;
+package product.demo.shop.domain.verification.repository;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
-import product.demo.shop.domain.email.entity.EmailVerificationEntity;
+import product.demo.shop.domain.verification.entity.EmailVerificationEntity;
 
 import java.util.Optional;
 
