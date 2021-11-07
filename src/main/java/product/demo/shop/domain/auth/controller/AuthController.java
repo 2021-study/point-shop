@@ -16,6 +16,8 @@ import product.demo.shop.domain.auth.dto.SignupDto;
 import product.demo.shop.domain.auth.dto.requests.SignupRequest;
 import product.demo.shop.domain.auth.dto.responses.SignupResponse;
 
+import javax.validation.Valid;
+
 import static product.demo.shop.domain.auth.controller.AuthController.AUTH_API_PATH;
 
 @RestController
@@ -27,7 +29,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/sign-up")
-    public ResponseEntity<SignupResponse> signUp(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<SignupResponse> signUp(@RequestBody @Valid SignupRequest signupRequest) {
         return ResponseEntity.ok(
                 this.authService
                         .newUserSignUp(SignupDto.toSignupDto(signupRequest))

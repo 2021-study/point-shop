@@ -13,6 +13,13 @@ public class CommonException extends RuntimeException{
     String description;
     Throwable cause;
 
+    public CommonException(HttpStatus httpStatus, String message, Throwable throwable){
+        super(message,throwable);
+        this.errorStatus = httpStatus;
+        this.errorCode = httpStatus.value();
+        this.errorMessage = message;
+    }
+
     public CommonException(ErrorCode errorCode){
         super("[ErrorCode] : " + errorCode.getErrorStatus() + "\n"
                 + "[ErrorMessage] : " + errorCode.getErrorMessage() + "\n");
