@@ -2,13 +2,9 @@ package product.demo.shop.domain.verification.entity;
 
 import lombok.*;
 import product.demo.shop.common.entity.AuditEntity;
+import product.demo.shop.domain.verification.enums.VerificationCodeStatus;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,6 +28,6 @@ public class EmailVerificationEntity extends AuditEntity {
     @Column
     private LocalDateTime expiredDate;
 
-    @Column
-    private String verificationCodeStatus;
+    @Enumerated(EnumType.STRING)
+    private VerificationCodeStatus verificationCodeStatus;
 }
