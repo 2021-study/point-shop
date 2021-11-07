@@ -15,4 +15,8 @@ public class EmailAuthenticationService {
     private final EmailAuthenticationRepository emailAuthenticationRepository;
     public void verifyEmailUsingVerificationCode(String verificationCode) {
     }
+
+    public String createVerificationCode(long user_seq) {
+        return null;
+    }
 }
