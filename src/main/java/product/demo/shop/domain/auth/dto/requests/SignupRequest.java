@@ -1,16 +1,17 @@
 package product.demo.shop.domain.auth.dto.requests;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-@JsonDeserialize(builder = SignupRequest.SignupRequestBuilder.class)
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class SignupRequest {
     @Email @NotNull private String email;
@@ -24,8 +25,4 @@ public class SignupRequest {
     @NotNull private String phoneNumber;
 
     @NotNull private String address;
-
-    @JsonPOJOBuilder(withPrefix = "")
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class SignupRequestBuilder {}
 }
