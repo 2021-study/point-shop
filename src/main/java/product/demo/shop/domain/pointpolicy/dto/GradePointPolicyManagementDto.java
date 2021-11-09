@@ -32,19 +32,17 @@ public class GradePointPolicyManagementDto {
             MeasurementType unitOfMeasure,
             String policyName,
             BigDecimal appliedValue,
-            GradePolicyStatusType policyStatus
-    ){
-       return new GradePointPolicyManagementDto(
-               gradeName,
-               gradePolicyId,
-               userGradeId,
-               policyObject,
-               policyType,
-               unitOfMeasure,
-               policyName,
-               appliedValue,
-               policyStatus
-       );
+            GradePolicyStatusType policyStatus) {
+        return new GradePointPolicyManagementDto(
+                gradeName,
+                gradePolicyId,
+                userGradeId,
+                policyObject,
+                policyType,
+                unitOfMeasure,
+                policyName,
+                appliedValue,
+                policyStatus);
     }
 
     public static GradePointPolicyManagementDto of(
@@ -55,8 +53,7 @@ public class GradePointPolicyManagementDto {
             MeasurementType unitOfMeasure,
             String policyName,
             BigDecimal appliedValue,
-            GradePolicyStatusType policyStatus
-    ) {
+            GradePolicyStatusType policyStatus) {
         return GradePointPolicyManagementDto.of(
                 null,
                 gradePolicyId,
@@ -66,23 +63,26 @@ public class GradePointPolicyManagementDto {
                 unitOfMeasure,
                 policyName,
                 appliedValue,
-                policyStatus
-        );
+                policyStatus);
+    }
+
+    public static GradePointPolicyManagementDto of(
+            GradeName gradeName, String policyName, GradePolicyStatusType policyStatus) {
+        return GradePointPolicyManagementDto.of(
+                gradeName, null, null, null, null, null, policyName, null, policyStatus);
     }
 
     public static GradePointPolicyManagementDto fromRequest(
-        GradePointPolicyManagementRequest request
-    ){
-       return GradePointPolicyManagementDto.of(
-               request.getGradeName(),
-               null,
-               request.getUserGradeId(),
-               request.getPolicyObject(),
-               request.getPolicyType(),
-               request.getUnitOfMeasure(),
-               request.getPolicyName(),
-               request.getAppliedValue(),
-               request.getPolicyStatus()
-       );
+            GradePointPolicyManagementRequest request) {
+        return GradePointPolicyManagementDto.of(
+                request.getGradeName(),
+                null,
+                request.getUserGradeId(),
+                request.getPolicyObject(),
+                request.getPolicyType(),
+                request.getUnitOfMeasure(),
+                request.getPolicyName(),
+                request.getAppliedValue(),
+                request.getPolicyStatus());
     }
 }
