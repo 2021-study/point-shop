@@ -6,6 +6,6 @@ import product.demo.shop.domain.verification.entity.EmailVerificationEntity;
 
 import java.util.Optional;
 
-public interface EmailAuthenticationRepository extends CrudRepository<EmailVerificationEntity,Long> {
+public interface EmailVerificationRepository extends CrudRepository<EmailVerificationEntity,Long> {
     Optional<EmailVerificationEntity> findByVerificationCode(String verificationCode);
 }

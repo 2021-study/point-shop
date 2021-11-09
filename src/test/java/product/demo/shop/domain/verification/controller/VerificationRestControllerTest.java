@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import product.demo.shop.domain.user.service.CustomUserDetailsService;
-import product.demo.shop.domain.verification.service.EmailAuthenticationService;
+import product.demo.shop.domain.verification.service.EmailVerificationService;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -30,7 +30,7 @@ class VerificationRestControllerTest {
     @MockBean
     private PasswordEncoder passwordEncoder;
     @MockBean
-    private EmailAuthenticationService emailAuthenticationService;
+    private EmailVerificationService emailVerificationService;
 
     @MockBean
     private CustomUserDetailsService customUserDetailsService;

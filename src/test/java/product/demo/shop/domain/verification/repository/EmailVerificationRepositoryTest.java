@@ -35,9 +35,9 @@ import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
                         DataBaseConfiguration.class,
                         QuerydslConfig.class
                 }))
-class EmailAuthenticationRepositoryTest {
+class EmailVerificationRepositoryTest {
     @Autowired
-    EmailAuthenticationRepository emailAuthenticationRepository;
+    EmailVerificationRepository emailVerificationRepository;
 
     @Autowired
     EntityManager em;
@@ -45,7 +45,7 @@ class EmailAuthenticationRepositoryTest {
     @BeforeEach
     void setUpData(){
 
-        emailAuthenticationRepository.saveAll(
+        emailVerificationRepository.saveAll(
                 Arrays.asList(
                         makeEmailVerificationEntitySample(1L, "4", getPastTime(), VerificationCodeStatus.CREATED),
                         makeEmailVerificationEntitySample(2L, "6", getPastTime(), VerificationCodeStatus.CONFIRMED),
@@ -83,7 +83,7 @@ class EmailAuthenticationRepositoryTest {
     class 이메일_인증_코드로_인증_엔티티_가져오기{
         @Test
         void 이메일_인증_코드가_존재하는_인증코드인_경우(){
-            Optional<EmailVerificationEntity> findEmailVerificationEntity = emailAuthenticationRepository.findByVerificationCode("3");
+            Optional<EmailVerificationEntity> findEmailVerificationEntity = emailVerificationRepository.findByVerificationCode("3");
 
             assertThat(findEmailVerificationEntity.isPresent(),is(equalTo(true)));
             assertThat(findEmailVerificationEntity.get().getVerificationCode(),is(equalTo("3")));
@@ -91,7 +91,7 @@ class EmailAuthenticationRepositoryTest {
 
         @Test
         void 이메일_인증_코드가_존재하지_않는_인증코드인_경우(){
-            Optional<EmailVerificationEntity> findEmailVerificationEntity = emailAuthenticationRepository.findByVerificationCode("999");
+            Optional<EmailVerificationEntity> findEmailVerificationEntity = emailVerificationRepository.findByVerificationCode("999");
 
             assertThat(findEmailVerificationEntity.isEmpty(),is(equalTo(true)));
         }

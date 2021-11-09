@@ -8,23 +8,22 @@ import product.demo.shop.domain.verification.entity.EmailVerificationEntity;
 import product.demo.shop.domain.verification.enums.VerificationCodeStatus;
 import product.demo.shop.domain.verification.exception.EmailVerificationErrorCode;
 import product.demo.shop.domain.verification.exception.EmailVerificationException;
-import product.demo.shop.domain.verification.repository.EmailAuthenticationRepository;
+import product.demo.shop.domain.verification.repository.EmailVerificationRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
 @Transactional
-public class EmailAuthenticationService {
-    private final EmailAuthenticationRepository emailAuthenticationRepository;
+public class EmailVerificationService {
+    private final EmailVerificationRepository emailVerificationRepository;
     private final int ADD_EXPIRED_HOURS = 3;
 
     public void verifyEmailUsingVerificationCode(String verificationCode) {
-        EmailVerificationEntity findEmailVerificationEntity = emailAuthenticationRepository.findByVerificationCode(verificationCode).orElseThrow(() -> new EmailVerificationException(EmailVerificationErrorCode.NOT_FOUND_TOKEN));
+        EmailVerificationEntity findEmailVerificationEntity = emailVerificationRepository.findByVerificationCode(verificationCode).orElseThrow(() -> new EmailVerificationException(EmailVerificationErrorCode.NOT_FOUND_TOKEN));
 
         boolean isBefore = findEmailVerificationEntity.getExpiredDate().isBefore(LocalDateTime.now());
         if(isBefore){
@@ -47,7 +46,7 @@ public class EmailAuthenticationService {
                 .verificationCode(UUID.randomUUID().toString())
                 .build();
 
-        emailAuthenticationRepository.save(emailVerificationEntity);
+        emailVerificationRepository.save(emailVerificationEntity);
 
         return emailVerificationEntity.getVerificationCode();
     }
