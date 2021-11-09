@@ -3,10 +3,13 @@ package product.demo.shop.domain.verification.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.AdditionalAnswers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.util.ReflectionTestUtils;
 import product.demo.shop.domain.verification.entity.EmailVerificationEntity;
 import product.demo.shop.domain.verification.enums.VerificationCodeStatus;
 import product.demo.shop.domain.verification.exception.EmailVerificationErrorCode;
@@ -21,10 +24,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith({MockitoExtension.class})
 class EmailAuthenticationServiceTest {
@@ -39,17 +41,6 @@ class EmailAuthenticationServiceTest {
 
     @Nested
     class 이메일_인증_코드을_통한_이메일_인증 {
-
-        private EmailVerificationEntity createEmailVerificationEntity(String verificationCode, LocalDateTime expiredDate, long userId, VerificationCodeStatus verificationCodeStatus) {
-            return EmailVerificationEntity
-                    .builder()
-                    .emailVerificationCodeId(1L)
-                    .verificationCode(verificationCode)
-                    .expiredDate(expiredDate)
-                    .verificationCodeStatus(verificationCodeStatus)
-                    .userId(userId)
-                    .build();
-        }
 
         @Test
         void 해당_코드가_정상적이면_인증에_성공한다() {
@@ -103,7 +94,21 @@ class EmailAuthenticationServiceTest {
         @Test
         void 이메일_인증_코드_생성에_성공한다() {
             String code = emailAuthenticationService.createVerificationCode(USER_ID);
-            assertThat(code, is(equalTo(VERIFICATION_CODE)));
+            verify(emailAuthenticationRepository, times(1)).save(any(EmailVerificationEntity.class));
+            //TODO 여기 테스트를 어떤식으로 해야할 지 모르겠음.
+            assertThat(code.length(), is(equalTo(36)));
         }
     }
+
+    private EmailVerificationEntity createEmailVerificationEntity(String verificationCode, LocalDateTime expiredDate, long userId, VerificationCodeStatus verificationCodeStatus) {
+        return EmailVerificationEntity
+                .builder()
+                .emailVerificationCodeId(1L)
+                .verificationCode(verificationCode)
+                .expiredDate(expiredDate)
+                .verificationCodeStatus(verificationCodeStatus)
+                .userId(userId)
+                .build();
+    }
+
 }

@@ -11,7 +11,9 @@ import product.demo.shop.domain.verification.exception.EmailVerificationExceptio
 import product.demo.shop.domain.verification.repository.EmailAuthenticationRepository;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +21,7 @@ import java.util.Optional;
 @Transactional
 public class EmailAuthenticationService {
     private final EmailAuthenticationRepository emailAuthenticationRepository;
+    private final int ADD_EXPIRED_HOURS = 3;
 
     public void verifyEmailUsingVerificationCode(String verificationCode) {
         EmailVerificationEntity findEmailVerificationEntity = emailAuthenticationRepository.findByVerificationCode(verificationCode).orElseThrow(() -> new EmailVerificationException(EmailVerificationErrorCode.NOT_FOUND_TOKEN));
@@ -35,7 +38,18 @@ public class EmailAuthenticationService {
         findEmailVerificationEntity.useCode();
     }
 
-    public String createVerificationCode(long user_seq) {
-        return null;
+    public String createVerificationCode(long userInfoId) {
+        EmailVerificationEntity emailVerificationEntity = EmailVerificationEntity
+                .builder()
+                .userId(userInfoId)
+                .verificationCodeStatus(VerificationCodeStatus.CREATED)
+                .expiredDate(LocalDateTime.now().plus(ADD_EXPIRED_HOURS, ChronoUnit.HOURS))
+                .verificationCode(UUID.randomUUID().toString())
+                .build();
+
+        emailAuthenticationRepository.save(emailVerificationEntity);
+
+        return emailVerificationEntity.getVerificationCode();
     }
+
 }
