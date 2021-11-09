@@ -63,6 +63,8 @@ public class CustomGradePolicyRepositoryImpl implements CustomGradePolicyReposit
 
     @Override
     public List<GradePolicyDto> findGradePoliciesByGradeName(GradeName gradeName, GradePolicyObject objectType) {
+        // 서버 사이드에서 등급 정책 적용 결과 산출을 위해 사용되는 API가 되며,
+        // ACTIVATE한 상태만 한번에 쿼리하기 위해 List<T>로 리턴함.(페이징 미적용)
         return jpaQueryFactory
                 .select(
                         new QGradePolicyDto(

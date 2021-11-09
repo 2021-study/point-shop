@@ -235,4 +235,9 @@ public class CustomGradePolicyRepositoryTest {
         assertTrue(findResults.getNumberOfElements() >= 0);
         assertEquals(expectValue, findResults.getNumberOfElements());
     }
+
+    @ParameterizedTest
+    public void findGradePoliciesByGradeNameTest() {
+
+    }
 }
