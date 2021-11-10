@@ -66,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
                 var findUser = this.userRepository.findById(userInfoId).orElseThrow();
                 findUser.changeUserStatusConfirmed();
                 this.userRepository.save(findUser);
-                return new SignUpCompleteResponse(
+                return SignUpCompleteResponse.of(
                         findUser.getUserAccountId(), findUser.getUserStatus());
             } else {
                 // 예외 처리가 귀찮아서 이렇게 둡니다.

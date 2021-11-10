@@ -143,7 +143,7 @@ public class AuthControllerTest {
     @Test
     public void validationNewUserTest() throws Exception {
         when(authService.completeSignUp(any(), any()))
-                .thenReturn(new SignUpCompleteResponse("jay", UserStatusType.VERIFIED));
+                .thenReturn(SignUpCompleteResponse.of("jay", UserStatusType.VERIFIED));
 
         mockMvc.perform(
                         RestDocumentationRequestBuilders.get(
