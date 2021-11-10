@@ -36,6 +36,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
@@ -203,6 +204,15 @@ public class CustomGradePolicyRepositoryTest {
                         PageRequest.of(2, 5), 0, "한 페이지에 보여주는 데이터는 5개 / 세 번째 페이지 -> 결과는 0이여야 한다."));
     }
 
+    static Stream<Arguments> generateGradePolicyNameQueryTestPrams() throws Exception {
+        return Stream.of(
+                Arguments.of(GradeName.BRONZE, GradePolicyObject.POINT,2,"[WHERE 조건] : BRONZE, POINT"),
+        Arguments.of(GradeName.BRONZE, null,2,"[WHERE 조건] : BRONZE, POINT"),
+        Arguments.of(null, GradePolicyObject.POINT,3,"[WHERE 조건] : BRONZE, POINT"),
+        Arguments.of(null, null,5,"[WHERE 조건] : 없음")
+        );
+    }
+
     @BeforeAll
     public void setUp() {
         userGradeRepository.saveAllAndFlush(testUserGradeList);
@@ -236,8 +246,14 @@ public class CustomGradePolicyRepositoryTest {
         assertEquals(expectValue, findResults.getNumberOfElements());
     }
 
-    @ParameterizedTest
-    public void findGradePoliciesByGradeNameTest() {
+    @ParameterizedTest(name = "{index}: {3}")
+    @MethodSource("generateGradePolicyNameQueryTestPrams")
+    @DisplayName("최종 포인트 산출용 API(findGradePoliciesByGradeName) 테스트")
+    public void findGradePoliciesByGradeNameTest(GradeName gradeName, GradePolicyObject policyObject, int expect, String message) {
+        var findResult = customGradePolicyRepositoryImpl.findGradePoliciesByGradeName(gradeName, policyObject);
 
+        assertFalse(findResult.isEmpty());
+        System.out.println("TOTAL : ::: " + findResult.size());
+        assertEquals(expect,findResult.size());
     }
 }

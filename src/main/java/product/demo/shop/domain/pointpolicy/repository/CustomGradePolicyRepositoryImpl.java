@@ -51,9 +51,9 @@ public class CustomGradePolicyRepositoryImpl implements CustomGradePolicyReposit
                         .innerJoin(qUserGradeEntity)
                         .on(qGradePolicyEntity.userGradeId.eq(qUserGradeEntity.userGradeId))
                         .where(
-                                containGradePolicyName(dto.getPolicyName())
-                                        ,(eqGradeName(dto.getGradeName()))
-                                        ,(eqPolicyStatus(dto.getPolicyStatus())))
+                                containGradePolicyName(dto.getPolicyName()),
+                                (eqGradeName(dto.getGradeName())),
+                                (eqPolicyStatus(dto.getPolicyStatus())))
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize())
                         .fetchResults();
@@ -62,7 +62,8 @@ public class CustomGradePolicyRepositoryImpl implements CustomGradePolicyReposit
     }
 
     @Override
-    public List<GradePolicyDto> findGradePoliciesByGradeName(GradeName gradeName, GradePolicyObject objectType) {
+    public List<GradePolicyDto> findGradePoliciesByGradeName(
+            GradeName gradeName, GradePolicyObject objectType) {
         // 서버 사이드에서 등급 정책 적용 결과 산출을 위해 사용되는 API가 되며,
         // ACTIVATE한 상태만 한번에 쿼리하기 위해 List<T>로 리턴함.(페이징 미적용)
         return jpaQueryFactory
@@ -81,11 +82,10 @@ public class CustomGradePolicyRepositoryImpl implements CustomGradePolicyReposit
                 .innerJoin(qUserGradeEntity)
                 .on(qGradePolicyEntity.userGradeId.eq(qUserGradeEntity.userGradeId))
                 .where(
-                        eqGradeName(gradeName)
-                                .and(qGradePolicyEntity.policyObject.eq(objectType))
-                                .and(
-                                        qGradePolicyEntity.policyStatus.eq(
-                                                GradePolicyStatusType.ACTIVATE))) // 활성화된 정책만 쿼리해온다.
+                        eqGradeName(gradeName),
+                        eqPolicyObject(objectType),
+                        qGradePolicyEntity.policyStatus.eq(
+                                GradePolicyStatusType.ACTIVATE)) // 활성화된 정책만 쿼리해온다.
                 .fetch();
     }
 
@@ -109,5 +109,13 @@ public class CustomGradePolicyRepositoryImpl implements CustomGradePolicyReposit
         }
 
         return this.qGradePolicyEntity.policyStatus.eq(statusType);
+    }
+
+    private BooleanExpression eqPolicyObject(GradePolicyObject gradePolicyObject) {
+        if(gradePolicyObject == null) {
+            return null;
+        }
+
+        return this.qGradePolicyEntity.policyObject.eq(gradePolicyObject);
     }
 }
