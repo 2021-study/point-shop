@@ -98,13 +98,18 @@ public class AuthControllerRequestTest {
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.requestFields(
-                                        PayloadDocumentation.fieldWithPath("email").description("email"),
-                                        PayloadDocumentation.fieldWithPath("userAccountId").description("userAccountId"),
-                                        PayloadDocumentation.fieldWithPath("name").description("name"),
-                                        PayloadDocumentation.fieldWithPath("password").description("password"),
-                                        PayloadDocumentation.fieldWithPath("phoneNumber").description("phoneNumber"),
-                                        PayloadDocumentation.fieldWithPath("address").description("address")
-                                ),
+                                        PayloadDocumentation.fieldWithPath("email")
+                                                .description("email"),
+                                        PayloadDocumentation.fieldWithPath("userAccountId")
+                                                .description("userAccountId"),
+                                        PayloadDocumentation.fieldWithPath("name")
+                                                .description("name"),
+                                        PayloadDocumentation.fieldWithPath("password")
+                                                .description("password"),
+                                        PayloadDocumentation.fieldWithPath("phoneNumber")
+                                                .description("phoneNumber"),
+                                        PayloadDocumentation.fieldWithPath("address")
+                                                .description("address")),
                                 PayloadDocumentation.responseFields(
                                         PayloadDocumentation.fieldWithPath("errorCode")
                                                 .type(JsonFieldType.NUMBER)
@@ -148,13 +153,18 @@ public class AuthControllerRequestTest {
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.requestFields(
-                                        PayloadDocumentation.fieldWithPath("email").description("email"),
-//                                        PayloadDocumentation.fieldWithPath("userAccountId").description("userAccountId"),
-                                        PayloadDocumentation.fieldWithPath("name").description("name"),
-                                        PayloadDocumentation.fieldWithPath("password").description("password"),
-                                        PayloadDocumentation.fieldWithPath("phoneNumber").description("phoneNumber"),
-                                        PayloadDocumentation.fieldWithPath("address").description("address")
-                                ),
+                                        PayloadDocumentation.fieldWithPath("email")
+                                                .description("email"),
+                                        //
+                                        // PayloadDocumentation.fieldWithPath("userAccountId").description("userAccountId"),
+                                        PayloadDocumentation.fieldWithPath("name")
+                                                .description("name"),
+                                        PayloadDocumentation.fieldWithPath("password")
+                                                .description("password"),
+                                        PayloadDocumentation.fieldWithPath("phoneNumber")
+                                                .description("phoneNumber"),
+                                        PayloadDocumentation.fieldWithPath("address")
+                                                .description("address")),
                                 PayloadDocumentation.responseFields(
                                         PayloadDocumentation.fieldWithPath("errorCode")
                                                 .type(JsonFieldType.NUMBER)
