@@ -18,21 +18,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import product.demo.shop.common.entity.AccountAuditAware;
 import product.demo.shop.configuration.DataBaseConfiguration;
 import product.demo.shop.configuration.QuerydslConfig;
-import product.demo.shop.domain.grade.entity.UserGradeEntity;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 import product.demo.shop.domain.grade.repository.UserGradeRepository;
 import product.demo.shop.domain.pointpolicy.dto.GradePointPolicyManagementDto;
-import product.demo.shop.domain.pointpolicy.entity.GradePolicyEntity;
 import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyObject;
 import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyStatusType;
-import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyType;
-import product.demo.shop.domain.pointpolicy.entity.enums.MeasurementType;
 import product.demo.shop.domain.pointpolicy.repository.CustomGradePolicyRepositoryImpl;
 import product.demo.shop.domain.pointpolicy.repository.GradePolicyRepository;
+import product.demo.shop.domain.user.grade.singleton.GradePolicySetupSingleton;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -61,95 +55,6 @@ public class CustomGradePolicyRepositoryTest {
     @Autowired UserGradeRepository userGradeRepository;
 
     @Autowired GradePolicyRepository gradePolicyRepository;
-
-    static final List<UserGradeEntity> testUserGradeList =
-            List.of(
-                    UserGradeEntity.builder().gradeName(GradeName.BRONZE).build(),
-                    UserGradeEntity.builder().gradeName(GradeName.SILVER).build(),
-                    UserGradeEntity.builder().gradeName(GradeName.GOLD).build());
-
-    static final List<GradePolicyEntity> testGradePolicies =
-            List.of(
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName("POLICY" + UUID.randomUUID())
-                            .userGradeId(1L)
-                            .policyObject(GradePolicyObject.POINT)
-                            .policyType(GradePolicyType.INCREMENT)
-                            .unitOfMeasure(MeasurementType.PERCENT)
-                            .appliedValue(new BigDecimal(4.5))
-                            .policyStatus(GradePolicyStatusType.ACTIVATE)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName("POLICY" + UUID.randomUUID())
-                            .userGradeId(1L)
-                            .policyObject(GradePolicyObject.POINT)
-                            .policyType(GradePolicyType.DECREMENT)
-                            .unitOfMeasure(MeasurementType.PERCENT)
-                            .appliedValue(new BigDecimal(23.55))
-                            .policyStatus(GradePolicyStatusType.ACTIVATE)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName(UUID.randomUUID().toString())
-                            .userGradeId(2L)
-                            .policyObject(GradePolicyObject.ORDER_PRICE)
-                            .policyType(GradePolicyType.DECREMENT)
-                            .unitOfMeasure(MeasurementType.POINT)
-                            .appliedValue(new BigDecimal(5000))
-                            .policyStatus(GradePolicyStatusType.ACTIVATE)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName(UUID.randomUUID().toString())
-                            .userGradeId(2L)
-                            .policyObject(GradePolicyObject.ORDER_PRICE)
-                            .policyType(GradePolicyType.DECREMENT)
-                            .unitOfMeasure(MeasurementType.PERCENT)
-                            .appliedValue(new BigDecimal(4.5))
-                            .policyStatus(GradePolicyStatusType.ACTIVATE)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName(UUID.randomUUID().toString())
-                            .userGradeId(3L)
-                            .policyObject(GradePolicyObject.POINT)
-                            .policyType(GradePolicyType.INCREMENT)
-                            .unitOfMeasure(MeasurementType.PERCENT)
-                            .appliedValue(new BigDecimal(4.5))
-                            .policyStatus(GradePolicyStatusType.HOLD)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName(UUID.randomUUID().toString())
-                            .userGradeId(1L)
-                            .policyObject(GradePolicyObject.POINT)
-                            .policyType(GradePolicyType.INCREMENT)
-                            .unitOfMeasure(MeasurementType.PERCENT)
-                            .appliedValue(new BigDecimal(4.5))
-                            .policyStatus(GradePolicyStatusType.CLOSED)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName(UUID.randomUUID().toString())
-                            .userGradeId(2L)
-                            .policyObject(GradePolicyObject.ORDER_PRICE)
-                            .policyType(GradePolicyType.DECREMENT)
-                            .unitOfMeasure(MeasurementType.PERCENT)
-                            .appliedValue(new BigDecimal(40.5))
-                            .policyStatus(GradePolicyStatusType.CLOSED)
-                            .build(),
-                    //
-                    GradePolicyEntity.builder()
-                            .policyName(UUID.randomUUID().toString())
-                            .userGradeId(3L)
-                            .policyObject(GradePolicyObject.POINT)
-                            .policyType(GradePolicyType.INCREMENT)
-                            .unitOfMeasure(MeasurementType.POINT)
-                            .appliedValue(new BigDecimal(5000))
-                            .policyStatus(GradePolicyStatusType.ACTIVATE)
-                            .build());
 
     static Stream<Arguments> generateGradePoliciesTestParams() throws Exception {
         return Stream.of(
@@ -206,17 +111,17 @@ public class CustomGradePolicyRepositoryTest {
 
     static Stream<Arguments> generateGradePolicyNameQueryTestPrams() throws Exception {
         return Stream.of(
-                Arguments.of(GradeName.BRONZE, GradePolicyObject.POINT,2,"[WHERE 조건] : BRONZE, POINT"),
-        Arguments.of(GradeName.BRONZE, null,2,"[WHERE 조건] : BRONZE, POINT"),
-        Arguments.of(null, GradePolicyObject.POINT,3,"[WHERE 조건] : BRONZE, POINT"),
-        Arguments.of(null, null,5,"[WHERE 조건] : 없음")
-        );
+                Arguments.of(
+                        GradeName.BRONZE, GradePolicyObject.POINT, 2, "[WHERE 조건] : BRONZE, POINT"),
+                Arguments.of(GradeName.BRONZE, null, 2, "[WHERE 조건] : BRONZE, POINT"),
+                Arguments.of(null, GradePolicyObject.POINT, 3, "[WHERE 조건] : BRONZE, POINT"),
+                Arguments.of(null, null, 5, "[WHERE 조건] : 없음"));
     }
 
     @BeforeAll
     public void setUp() {
-        userGradeRepository.saveAllAndFlush(testUserGradeList);
-        gradePolicyRepository.saveAllAndFlush(testGradePolicies);
+        GradePolicySetupSingleton.setUpSampleData(
+                this.userGradeRepository, this.gradePolicyRepository);
     }
 
     @ParameterizedTest(name = "{index}: {2}")
@@ -249,11 +154,14 @@ public class CustomGradePolicyRepositoryTest {
     @ParameterizedTest(name = "{index}: {3}")
     @MethodSource("generateGradePolicyNameQueryTestPrams")
     @DisplayName("최종 포인트 산출용 API(findGradePoliciesByGradeName) 테스트")
-    public void findGradePoliciesByGradeNameTest(GradeName gradeName, GradePolicyObject policyObject, int expect, String message) {
-        var findResult = customGradePolicyRepositoryImpl.findGradePoliciesByGradeName(gradeName, policyObject);
+    public void findGradePoliciesByGradeNameTest(
+            GradeName gradeName, GradePolicyObject policyObject, int expect, String message) {
+        var findResult =
+                customGradePolicyRepositoryImpl.findGradePoliciesByGradeName(
+                        gradeName, policyObject);
 
         assertFalse(findResult.isEmpty());
         System.out.println("TOTAL : ::: " + findResult.size());
-        assertEquals(expect,findResult.size());
+        assertEquals(expect, findResult.size());
     }
 }

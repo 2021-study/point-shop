@@ -17,11 +17,11 @@ public class CacheableGradePolicyServiceImpl {
     private final GradePolicyRepository gradePolicyRepository;
 
     @Cacheable(
-            cacheNames={"GRADE_POLICIES"},
+            cacheNames = {"GRADE_POLICIES"},
             cacheManager = CacheConfiguration.LOCAL_CAFFEINE_CACHE_MANAGER,
-            key = "'gradeName-'.concat(#gradeName.name())"
-    )
-    public List<GradePolicyDto> findByGradePolicyIdFromCache(GradeName gradeName, GradePolicyObject objectType) {
-        return this.gradePolicyRepository.findGradePoliciesByGradeName(gradeName,objectType);
+            key = "'gradeName-'.concat(#gradeName.name()).concat(#objectType.name())")
+    public List<GradePolicyDto> findByGradePolicyIdFromCache(
+            GradeName gradeName, GradePolicyObject objectType) {
+        return this.gradePolicyRepository.findGradePoliciesByGradeName(gradeName, objectType);
     }
 }

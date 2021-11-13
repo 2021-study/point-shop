@@ -17,11 +17,13 @@ public class GradePolicyAppliedResultDto {
 
     private GradePolicyInputDto inputDto;
 
-    public void addResultPoint(BigDecimal operand){
+    public void addResultPoint(BigDecimal operand) {
+        /* thread Safe 하지 않은 메서드 입니다.*/
         this.resultPoint = this.resultPoint.add(operand);
     }
 
-    public void minusResultPoint(BigDecimal operand){
+    public void minusResultPoint(BigDecimal operand) {
+        /* thread Safe 하지 않은 메서드 입니다.*/
         this.resultPoint = this.resultPoint.subtract(operand);
     }
 }
