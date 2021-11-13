@@ -36,7 +36,7 @@ public class AsyncConfig extends AsyncConfigurerSupport {
         executor.setMaxPoolSize(maxPoolSize);
         executor.setQueueCapacity(queueCapacity);
 
-        executor.setTaskDecorator(new ClonedTaskDecorator());
+//        executor.setTaskDecorator(new ClonedTaskDecorator());
         executor.setThreadNamePrefix("async-task-");
         executor.setThreadGroupName("async-group");
         executor.setWaitForTasksToCompleteOnShutdown(true); // 작업의 유실을 막기 위해 큐에 남아있는 Task를 모두 처리 할 때 까지 shutdown 유보.

@@ -56,7 +56,7 @@ public class CommonErrorCodeTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(new CharacterEncodingFilter("UTF-8", true)) // REST Doc 한글 깨짐 방지.
                 .apply(documentationConfiguration(restDocumentationContextProvider))
-                .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+//                .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .build();
     }
 
@@ -79,7 +79,7 @@ public class CommonErrorCodeTest {
                     assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
                 })
                 .andDo(
-                        document("[테스트전용] CommonException 활용 테스트 코드 입니다(Errorcode)",
+                        document("unknown-error-code-test",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.responseFields(
@@ -109,7 +109,7 @@ public class CommonErrorCodeTest {
                     assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
                 })
                 .andDo(
-                        document("[테스트전용] CommonException 활용 테스트 코드 입니다(Errorcode + Description)",
+                        document("common-exception-with-description",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.responseFields(
@@ -139,7 +139,7 @@ public class CommonErrorCodeTest {
                     assertThat("알수 없는 서버 에러 입니다.").isEqualTo(errorResponse.getErrorMessage());
                 })
                 .andDo(
-                        document("[테스트전용] CommonException 활용 테스트 코드 입니다(Errorcode + Description + throwable)",
+                        document("common-exception-with-description-and-throwable",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.responseFields(

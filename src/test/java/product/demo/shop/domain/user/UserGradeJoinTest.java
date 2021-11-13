@@ -19,12 +19,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Disabled
 public class UserGradeJoinTest {
 
-    @Autowired
-    UserRepository userRepository;
+    @Autowired UserRepository userRepository;
 
     @Test
     @DisplayName("Querydsl Join Test - 유저 등급과 유저 정보 조회")
-    public void userInfoDtoTest(){
+    public void userInfoDtoTest() {
         UserInfoDto userInfoDto = this.userRepository.findUserWithUserGradeInfo(1L);
 
         log.info("USER GRADE NAME : " + userInfoDto.getUserGradeName());
@@ -33,6 +32,4 @@ public class UserGradeJoinTest {
         assertThat(userInfoDto.getUserGradeName()).isEqualTo(GradeName.BRONZE);
         assertThat(userInfoDto.getEmail()).isEqualTo("sample@email.com");
     }
-
-
 }

@@ -17,6 +17,7 @@ import product.demo.shop.domain.grade.entity.UserGradeEntity;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 import product.demo.shop.domain.grade.repository.UserGradeRepository;
 import product.demo.shop.domain.user.entity.UserEntity;
+import product.demo.shop.domain.user.entity.enums.UserStatusType;
 import product.demo.shop.domain.user.repository.UserRepository;
 
 import java.util.List;
@@ -68,31 +69,30 @@ public class UserGradeTest {
     @DisplayName("유저 ID가 입력되었을 때, 유저 등급도 같이 조회화는 조인 쿼리 테스트")
     public void userGradeJoinTest() {
         var registeredUser =
-                userRepository
-                        .findAll()
-                        .stream()
+                userRepository.findAll().stream()
                         .findFirst()
                         .orElseThrow(
                                 () -> {
                                     throw new NoSuchElementException("주어진 조건의 User가 없습니다.");
                                 });
 
-        var searchedUserInfoDto = userRepository.findUserWithUserGradeInfo(registeredUser.getUserInfoId());
+        var searchedUserInfoDto =
+                userRepository.findUserWithUserGradeInfo(registeredUser.getUserInfoId());
 
         assertAll(
-                ()->assertNotNull(searchedUserInfoDto),
-                ()->assertEquals(registeredUser.getEmail(),searchedUserInfoDto.getEmail()),
-                ()->assertEquals(registeredUser.getUserGradeId(), searchedUserInfoDto.getUserGradeId())
-        );
+                () -> assertNotNull(searchedUserInfoDto),
+                () -> assertEquals(registeredUser.getEmail(), searchedUserInfoDto.getEmail()),
+                () ->
+                        assertEquals(
+                                registeredUser.getUserGradeId(),
+                                searchedUserInfoDto.getUserGradeId()));
     }
 
     @Test
     @DisplayName("유저 등록 시 암호화 되는 부분은 DB에 Save할 때 자동으로 암호화 되고, 읽을 때 자동으로 복호화 되어야 한다.")
-    public void saveUserEncryptDecryptTest(){
+    public void saveUserEncryptDecryptTest() {
         var registeredUser =
-                userRepository
-                        .findAll()
-                        .stream()
+                userRepository.findAll().stream()
                         .findFirst()
                         .orElseThrow(
                                 () -> {
@@ -100,15 +100,13 @@ public class UserGradeTest {
                                 });
 
         assertThat(registeredUser.getName()).isEqualTo("sample");
-        var newUser =
-                makeSampleUser("Jacob");
-        var newRegisterUser  = userRepository.saveAndFlush(newUser);
+        var newUser = makeSampleUser("Jacob");
+        var newRegisterUser = userRepository.saveAndFlush(newUser);
         assertThat(newRegisterUser.getName()).isEqualTo("Jacob");
     }
 
     private UserEntity makeSampleUser(String name) {
-        return UserEntity
-                .builder()
+        return UserEntity.builder()
                 .userGradeId(1L)
                 .userAccountId("sampleUser")
                 .snsProviderType("sns_provider")
@@ -117,7 +115,7 @@ public class UserGradeTest {
                 .phone("010-1111-1111")
                 .password("password")
                 .address("address")
-                .userStatus("CONFIRMED")
+                .userStatus(UserStatusType.VERIFIED)
                 .build();
     }
 }
