@@ -152,6 +152,15 @@
                         <configuration>
                             <backend>html</backend>
                             <doctype>book</doctype>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/static/rest-docs </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.build.directory}/generated-docs
+                                    </directory>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>

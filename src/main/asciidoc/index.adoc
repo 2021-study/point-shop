@@ -7,91 +7,155 @@
 :sectnums:
 :sectlinks:
 :sectanchors:
+:hardbreaks:
 
-[[api]]
-== exception-test
-테스트 전용 API 입니다.(Exception 발생시 Error 포맷에 맞는 Response 응답 여부 확인)
 
+== 테스트 전용 API 입니다
+[[unknown-error-code-test]]
+
+.curl-request
 include::{snippets}/unknown-error-code-test/curl-request.adoc[]
 
+.http-request
 include::{snippets}/unknown-error-code-test/http-request.adoc[]
 
-include::{snippets}/unknown-error-code-test/http-response.adoc[]
-
+.httpie-request
 include::{snippets}/unknown-error-code-test/httpie-request.adoc[]
 
+.request-body(json)
 include::{snippets}/unknown-error-code-test/request-body.adoc[]
 
+===
+
+.http-response
+include::{snippets}/unknown-error-code-test/http-response.adoc[]
+
+.response-body
 include::{snippets}/unknown-error-code-test/response-body.adoc[]
 
+.response-fields
 include::{snippets}/unknown-error-code-test/response-fields.adoc[]
 
-== common-exception-with-description
+== exception에 description추가
+[[common-exception-with-description]]
 
+.curl-request
 include::{snippets}/common-exception-with-description/curl-request.adoc[]
 
+.http-request
 include::{snippets}/common-exception-with-description/http-request.adoc[]
 
-include::{snippets}/common-exception-with-description/http-response.adoc[]
-
+.httpie-request
 include::{snippets}/common-exception-with-description/httpie-request.adoc[]
 
+.request-body
 include::{snippets}/common-exception-with-description/request-body.adoc[]
 
+.http-response
+include::{snippets}/common-exception-with-description/http-response.adoc[]
+
+.response-body
 include::{snippets}/common-exception-with-description/response-body.adoc[]
 
+.response-fields
 include::{snippets}/common-exception-with-description/response-fields.adoc[]
 
-== common-exception-with-description-and-throwable
+== exception에 description, throwable 추가
+[[common-exception-with-description-and-throwable]]
 
+.curl-request
 include::{snippets}/common-exception-with-description-and-throwable/curl-request.adoc[]
 
+.http-request
 include::{snippets}/common-exception-with-description-and-throwable/http-request.adoc[]
 
-include::{snippets}/common-exception-with-description-and-throwable/http-response.adoc[]
-
+.httpie-request
 include::{snippets}/common-exception-with-description-and-throwable/httpie-request.adoc[]
 
+.request-body
 include::{snippets}/common-exception-with-description-and-throwable/request-body.adoc[]
 
+.http-response
+include::{snippets}/common-exception-with-description-and-throwable/http-response.adoc[]
+
+.response-body
 include::{snippets}/common-exception-with-description-and-throwable/response-body.adoc[]
 
+.response-fields
 include::{snippets}/common-exception-with-description-and-throwable/response-fields.adoc[]
 
-[[auth]]
 
-== /api/v1/auth/sign-up
-자체 구현 로그인 API
+== 자체구현 회원가입 API
+[[register-new-user-in-house-sign-up]]
 
+.curl-request
 include::{snippets}/register-new-user-in-house-sign-up/curl-request.adoc[]
 
+.http-request
 include::{snippets}/register-new-user-in-house-sign-up/http-request.adoc[]
 
-include::{snippets}/register-new-user-in-house-sign-up/http-response.adoc[]
-
+.httpie-request
 include::{snippets}/register-new-user-in-house-sign-up/httpie-request.adoc[]
 
+.request-body
 include::{snippets}/register-new-user-in-house-sign-up/request-body.adoc[]
 
+.request-fields
 include::{snippets}/register-new-user-in-house-sign-up/request-fields.adoc[]
 
+.http-response
+include::{snippets}/register-new-user-in-house-sign-up/http-response.adoc[]
+
+.response-body
 include::{snippets}/register-new-user-in-house-sign-up/response-body.adoc[]
 
+.response-fields
 include::{snippets}/register-new-user-in-house-sign-up/response-fields.adoc[]
 
-== /api/v1/auth/verify/{userInfoId}/{tokenValue}
-메일 인증 처리 API
+이메일 형식에 맞지 않은 요청/응답
 
+.http-request
+include::{snippets}/email-validation-failed-in-signing-up/http-request.adoc[]
+
+.response-body
+include::{snippets}/email-validation-failed-in-signing-up/response-body.adoc[]
+
+.response-fields
+include::{snippets}/email-validation-failed-in-signing-up/response-fields.adoc[]
+
+
+NotNull에 맞지 않은 요청/응답
+
+.http-request
+include::{snippets}/notnull-validation-failed-in-signing-up/http-request.adoc[]
+
+.response-body
+include::{snippets}/notnull-validation-failed-in-signing-up/response-body.adoc[]
+
+.response-fields
+include::{snippets}/notnull-validation-failed-in-signing-up/response-fields.adoc[]
+
+
+== 메일 인증 처리 API
+[[validation-new-user-test]]
+
+.curl-request
 include::{snippets}/validation-new-user-test/curl-request.adoc[]
 
+.http-request
 include::{snippets}/validation-new-user-test/http-request.adoc[]
 
-include::{snippets}/validation-new-user-test/http-response.adoc[]
-
+.httpie-request
 include::{snippets}/validation-new-user-test/httpie-request.adoc[]
 
+.path-parameter
 include::{snippets}/validation-new-user-test/path-parameters.adoc[]
 
+.http-response
+include::{snippets}/validation-new-user-test/http-response.adoc[]
+
+.response-body
 include::{snippets}/validation-new-user-test/response-body.adoc[]
 
+.response-fields
 include::{snippets}/validation-new-user-test/response-fields.adoc[]
