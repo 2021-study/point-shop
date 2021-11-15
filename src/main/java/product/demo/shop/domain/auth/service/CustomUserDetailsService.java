@@ -1,4 +1,4 @@
-package product.demo.shop.domain.user.service;
+package product.demo.shop.domain.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

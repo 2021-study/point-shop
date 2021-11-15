@@ -77,9 +77,9 @@ CREATE TABLE `tb_grade_policy` (
    PRIMARY KEY (`grade_policy_id`)
 ) COMMENT='등급별 졍책 관리';
 
-DROP TABLE IF EXISTS `TB_POINT_EVENT`;
+DROP TABLE IF EXISTS `tb_point_event`;
 
-CREATE TABLE `TB_POINT_EVENT` (
+CREATE TABLE `tb_point_event` (
   `point_event_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
   `user_info_id`	bigint(20)	NOT NULL,
   `event_type`	varchar(15)	NOT NULL	COMMENT '(적립, 사용)',
@@ -97,9 +97,9 @@ CREATE TABLE `TB_POINT_EVENT` (
   KEY index_code_code_id(`code`, `code_id`)
 )COMMENT='포인트 이벤트';
 
-DROP TABLE IF EXISTS `TB_POINT_DETAIL`;
+DROP TABLE IF EXISTS `tb_point_detail`;
 
-CREATE TABLE `TB_POINT_DETAIL` (
+CREATE TABLE `tb_point_detail` (
    `point_detail_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
    `point_event_id`	bigint(20)	NOT NULL	COMMENT '원본 포인트 아이디',
    `event_type`	varchar(15)	NOT NULL	COMMENT '(적립, 사용)',
@@ -116,9 +116,9 @@ CREATE TABLE `TB_POINT_DETAIL` (
    KEY index_d_a_point_id(`detail_accumulated_point_id`)
 )COMMENT='포인트 이벤트 상세';
 
-DROP TABLE IF EXISTS `TB_PRODUCT_CATEGORY`;
+DROP TABLE IF EXISTS `tb_product_category`;
 
-CREATE TABLE `TB_PRODUCT_CATEGORY` (
+CREATE TABLE `tb_product_category` (
    `product_category_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
    `parent`	bigint(20)	NULL,
    `product_category_name`	varchar(250)	NOT NULL	COMMENT '상품 카테고리명칭',
@@ -130,14 +130,14 @@ CREATE TABLE `TB_PRODUCT_CATEGORY` (
    KEY index_parent(`parent`)
 )COMMENT='상품 카테고리';
 
-ALTER TABLE `TB_PRODUCT_CATEGORY` ADD CONSTRAINT `FK_TB_PRODUCT_CATEGORY_TO_TB_PRODUCT_CATEGORY_1`
+ALTER TABLE `tb_product_category` ADD CONSTRAINT `FK_TB_PRODUCT_CATEGORY_TO_TB_PRODUCT_CATEGORY_1`
     FOREIGN KEY (`parent`)
-    REFERENCES `TB_PRODUCT_CATEGORY` (`product_category_id`);
+    REFERENCES `tb_product_category` (`product_category_id`);
 
 
-DROP TABLE IF EXISTS `TB_PRODUCT_INFO`;
+DROP TABLE IF EXISTS `tb_product_info`;
 
-CREATE TABLE `TB_PRODUCT_INFO` (
+CREATE TABLE `tb_product_info` (
    `product_info_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
    `product_category_id`	bigint(20)	NOT NULL,
    `product_name`	varchar(45)	NOT NULL	COMMENT '상품명',
@@ -154,9 +154,9 @@ CREATE TABLE `TB_PRODUCT_INFO` (
    KEY index_p_category_id(`product_category_id`)
 ) COMMENT ='상품정보';
 
-DROP TABLE IF EXISTS `TB_ORDER_INFO`;
+DROP TABLE IF EXISTS `tb_order_info`;
 
-CREATE TABLE `TB_ORDER_INFO` (
+CREATE TABLE `tb_order_info` (
      `order_info_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
      `order_number`	varchar(30)	NOT NULL	COMMENT '유니크 주문 번호',
      `user_id`	bigint(20)	NOT NULL	COMMENT 'user_id',
@@ -173,9 +173,9 @@ CREATE TABLE `TB_ORDER_INFO` (
      KEY index_user_id(`user_id`)
 )COMMENT ='주문 정보';
 
-DROP TABLE IF EXISTS `TB_ORDER_ITMES`;
+DROP TABLE IF EXISTS `tb_order_items`;
 
-CREATE TABLE `TB_ORDER_ITEMS` (
+CREATE TABLE `tb_order_items` (
       `order_items_id`	bigint(20)	NOT NULL AUTO_INCREMENT,
       `product_info_id`	bigint(20)	NOT NULL,
       `order_info_id`	bigint(20)	NOT NULL,

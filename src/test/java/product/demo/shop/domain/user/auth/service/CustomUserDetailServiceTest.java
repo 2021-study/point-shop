@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,7 +16,7 @@ import product.demo.shop.domain.auth.exception.PointShopAuthException;
 import product.demo.shop.domain.user.entity.UserEntity;
 import product.demo.shop.domain.user.entity.enums.UserStatusType;
 import product.demo.shop.domain.user.repository.UserRepository;
-import product.demo.shop.domain.user.service.CustomUserDetailsService;
+import product.demo.shop.domain.auth.service.CustomUserDetailsService;
 
 import java.util.Optional;
 

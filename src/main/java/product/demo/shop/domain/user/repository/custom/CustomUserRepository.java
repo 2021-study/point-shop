@@ -4,5 +4,5 @@ import product.demo.shop.domain.user.dto.UserInfoDto;
 
 public interface CustomUserRepository {
 
-    UserInfoDto findUserWithUserGradeInfo(Long userId);
+    UserInfoDto findMyUserComprehensiveInfo(Long userId);
 }

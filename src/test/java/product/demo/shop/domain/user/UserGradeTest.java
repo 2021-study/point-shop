@@ -2,6 +2,7 @@ package product.demo.shop.domain.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -16,10 +17,14 @@ import product.demo.shop.configuration.QuerydslConfig;
 import product.demo.shop.domain.grade.entity.UserGradeEntity;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 import product.demo.shop.domain.grade.repository.UserGradeRepository;
+import product.demo.shop.domain.point.entity.PointEventEntity;
+import product.demo.shop.domain.point.entity.enums.PointEventType;
+import product.demo.shop.domain.point.repository.PointEventEntityRepository;
 import product.demo.shop.domain.user.entity.UserEntity;
 import product.demo.shop.domain.user.entity.enums.UserStatusType;
 import product.demo.shop.domain.user.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -52,6 +57,8 @@ public class UserGradeTest {
 
     @Autowired UserGradeRepository userGradeRepository;
 
+    @Autowired PointEventEntityRepository pointEventEntityRepository;
+
     @BeforeAll
     public void setUpTestData() {
         var testUser = makeSampleUser("sample");
@@ -61,8 +68,45 @@ public class UserGradeTest {
                         UserGradeEntity.builder().gradeName(GradeName.SILVER).build(),
                         UserGradeEntity.builder().gradeName(GradeName.GOLD).build());
 
-        userRepository.save(testUser);
+        var savedUser = userRepository.save(testUser);
+
+        var testPointEventList =
+                List.of(
+                        PointEventEntity.of(
+                                savedUser.getUserInfoId(),
+                                PointEventType.SAVE,
+                                1_000,
+                                "POINT",
+                                "TB_POINT_EVENT",
+                                "테스트적립",
+                                LocalDateTime.now().plusYears(1L)),
+                        PointEventEntity.of(
+                                savedUser.getUserInfoId(),
+                                PointEventType.SAVE,
+                                1_000,
+                                "POINT",
+                                "TB_POINT_EVENT",
+                                "테스트적립",
+                                LocalDateTime.now().plusYears(1L)),
+                        PointEventEntity.of(
+                                savedUser.getUserInfoId() + 1L,
+                                PointEventType.SAVE,
+                                1_000,
+                                "POINT",
+                                "TB_POINT_EVENT",
+                                "테스트적립",
+                                LocalDateTime.now().plusYears(1L)),
+                        PointEventEntity.of(
+                                savedUser.getUserInfoId(),
+                                PointEventType.USE,
+                                -250,
+                                "POINT",
+                                "TB_POINT_EVENT",
+                                "테스트적립",
+                                LocalDateTime.now().plusYears(1L)));
+
         userGradeRepository.saveAll(testUserGradeList);
+        pointEventEntityRepository.saveAll(testPointEventList);
     }
 
     @Test
@@ -77,15 +121,18 @@ public class UserGradeTest {
                                 });
 
         var searchedUserInfoDto =
-                userRepository.findUserWithUserGradeInfo(registeredUser.getUserInfoId());
+                userRepository.findMyUserComprehensiveInfo(registeredUser.getUserInfoId());
 
+        log.info("Searched user Info Dto : " + searchedUserInfoDto);
         assertAll(
                 () -> assertNotNull(searchedUserInfoDto),
                 () -> assertEquals(registeredUser.getEmail(), searchedUserInfoDto.getEmail()),
                 () ->
                         assertEquals(
                                 registeredUser.getUserGradeId(),
-                                searchedUserInfoDto.getUserGradeId()));
+                                searchedUserInfoDto.getUserGradeId()),
+                () -> assertEquals(1750, searchedUserInfoDto.getTotalUsablePoint()) // 총 가용 포인트
+        );
     }
 
     @Test
