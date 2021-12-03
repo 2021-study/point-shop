@@ -32,6 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers("/rest-docs/**") // Spring RestDoc 문서 조회
+                .permitAll()
                 .antMatchers(HealthCheckController.PING_PATH)
                 .permitAll()
                 .antMatchers(AUTH_API_PATH + "/sign-up")

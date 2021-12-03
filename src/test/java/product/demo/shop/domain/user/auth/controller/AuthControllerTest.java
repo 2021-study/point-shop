@@ -121,13 +121,18 @@ public class AuthControllerTest {
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
                                 PayloadDocumentation.requestFields(
-                                        PayloadDocumentation.fieldWithPath("email").description("email"),
-                                        PayloadDocumentation.fieldWithPath("userAccountId").description("userAccountId"),
-                                        PayloadDocumentation.fieldWithPath("name").description("name"),
-                                        PayloadDocumentation.fieldWithPath("password").description("password"),
-                                        PayloadDocumentation.fieldWithPath("phoneNumber").description("phoneNumber"),
-                                        PayloadDocumentation.fieldWithPath("address").description("address")
-                                ),
+                                        PayloadDocumentation.fieldWithPath("email")
+                                                .description("email"),
+                                        PayloadDocumentation.fieldWithPath("userAccountId")
+                                                .description("userAccountId"),
+                                        PayloadDocumentation.fieldWithPath("name")
+                                                .description("name"),
+                                        PayloadDocumentation.fieldWithPath("password")
+                                                .description("password"),
+                                        PayloadDocumentation.fieldWithPath("phoneNumber")
+                                                .description("phoneNumber"),
+                                        PayloadDocumentation.fieldWithPath("address")
+                                                .description("address")),
                                 PayloadDocumentation.responseFields(
                                         PayloadDocumentation.fieldWithPath("email")
                                                 .type(JsonFieldType.STRING)
@@ -177,8 +182,7 @@ public class AuthControllerTest {
                                 preprocessResponse(prettyPrint()),
                                 pathParameters(
                                         parameterWithName("userInfoId").description("userInfoId"),
-                                        parameterWithName("tokenValue").description("tokenValue")
-                                ),
+                                        parameterWithName("tokenValue").description("tokenValue")),
                                 PayloadDocumentation.responseFields(
                                         PayloadDocumentation.fieldWithPath("userAccountId")
                                                 .type(JsonFieldType.STRING)
