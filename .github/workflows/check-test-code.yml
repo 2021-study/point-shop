@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      # 자바 버전 11 세팅
-      - name: Set up JDK 11
+      # 자바 버전 17 세팅
+      - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       
       - name: Maven execute permission 
         run: chmod +x mvnw
