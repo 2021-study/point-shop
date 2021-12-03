@@ -1,4 +1,4 @@
-package product.demo.shop.domain.grade.entity.enums;
+package product.demo.shop.domain.pointpolicy.entity.enums;
 
 import lombok.Getter;
 

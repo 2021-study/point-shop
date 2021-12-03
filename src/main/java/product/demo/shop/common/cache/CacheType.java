@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum CacheType {
 
 
-    PRODUCTS("products", 5 * 60, 10000)
+    PRODUCTS("products", 5 * 60, 10000),
+    GRADE_POLICIES("grade_policies", 24*60, 10_0000)
 
     ;
 
