@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import product.demo.shop.CommonController;
-import product.demo.shop.domain.user.service.CustomUserDetailsService;
+import product.demo.shop.domain.auth.service.CustomUserDetailsService;
 import product.demo.shop.healthcheck.HealthCheckController;
 
 import static product.demo.shop.domain.auth.controller.AuthController.AUTH_API_PATH;

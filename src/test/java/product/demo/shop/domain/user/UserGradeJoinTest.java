@@ -24,7 +24,7 @@ public class UserGradeJoinTest {
     @Test
     @DisplayName("Querydsl Join Test - 유저 등급과 유저 정보 조회")
     public void userInfoDtoTest() {
-        UserInfoDto userInfoDto = this.userRepository.findUserWithUserGradeInfo(1L);
+        UserInfoDto userInfoDto = this.userRepository.findMyUserComprehensiveInfo(1L);
 
         log.info("USER GRADE NAME : " + userInfoDto.getUserGradeName());
         log.info("USER GRADE Email : " + userInfoDto.getEmail());
