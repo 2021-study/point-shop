@@ -4,7 +4,7 @@
 
 ## 사용 기술
 
-* Java 11
+* Java 17 (17.0.1)
 * Spring Boot 2.5.5
 * Spring Data JPA
 * Spring Security

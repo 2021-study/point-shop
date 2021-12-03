@@ -14,7 +14,7 @@
     <name>shop</name>
     <description>Point-based online shopping mall</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <querydsl.version>4.4.0</querydsl.version>
     </properties>
     <dependencies>
