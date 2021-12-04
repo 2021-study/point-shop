@@ -1,6 +1,5 @@
 package product.demo.shop.common.mail;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
