@@ -1,0 +1,26 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/shopdb
+    # DB 접근 계정 정보 암호화
+    username: iCWwblRPZ/AobGpU0sGzSA==
+    password: nYfhzPYlkFURs4ly/G+PGg==
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: validate # Flyway Migration으로 schema 초기화 진행
+      use-new-id-generator-mappings: false
+    database: mysql
+
+  flyway:
+    clean-on-validation-error: true
+
+server:
+  port: 8077
