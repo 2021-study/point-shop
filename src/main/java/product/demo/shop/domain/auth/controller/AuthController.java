@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import product.demo.shop.domain.auth.dto.responses.SignUpCompleteResponse;
 import product.demo.shop.domain.auth.service.AuthService;
@@ -48,3 +49,4 @@ public class AuthController {
     //        return ResponseEntity.ok(SignInResponse.class);
     //    }
 }
+

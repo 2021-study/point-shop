@@ -41,3 +41,10 @@ spring:
             user-name-attribute: response
   flyway:
     baseline-on-migrate: true
+###########################################
+# JWT
+###########################################
+jwt:
+  header: Authorization
+  secret: S6+e2uRDda0TTkxK95PUPmoLMKVF5tEo4GEjIYvi3hrAyR0srfDBZ1U/PNFKG37cmn++p/JGDSKhjCFXjPddzzuL9fbIXH2mGR6BI1P6UiY=
+  token-validity-in-seconds: 86400

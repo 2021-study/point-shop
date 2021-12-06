@@ -1,9 +1,28 @@
 import {Button, Checkbox, Form, Input} from 'antd';
 import 'antd/dist/antd.css';
+import {loginApi, setLocalStorage, setUpToken} from "../apis/api";
+import {showNotification} from "../utils/utils";
 
-const FormDemo = () => {
-    const onFinish = (values: any) => {
+
+type FormDemoProps = {
+    setLoginFormToggleOff : ()=>void
+}
+
+const FormDemo = ({setLoginFormToggleOff}: FormDemoProps) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
+        const response = loginApi(values.username, values.password);
+        response.then((token)=>{
+            setLocalStorage("JWT", token.token!)
+            setUpToken(token.token)
+            setLoginFormToggleOff();
+        }).catch((error)=>{
+            console.log("response : ",error )
+            console.log("login Res : " , error.response.data);
+            showNotification('error', error.response.data.errorCode, error.response.data.errorMessage)
+        })
+
+
     };
 
     const onFinishFailed = (errorInfo: any) => {
