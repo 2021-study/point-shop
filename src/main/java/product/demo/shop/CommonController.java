@@ -1,5 +1,6 @@
 package product.demo.shop;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController {
     public static final String DEFAULT_PATH = "/api/main";
 
+    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("")
     public String mainLoginTest(){
         SecurityContext secContext = SecurityContextHolder.getContext();

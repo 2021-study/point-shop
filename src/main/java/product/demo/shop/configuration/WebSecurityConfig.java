@@ -4,11 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import product.demo.shop.CommonController;
+import product.demo.shop.domain.auth.jwt.JwtAuthenticationEntryPoint;
+import product.demo.shop.domain.auth.jwt.TokenProvider;
 import product.demo.shop.domain.auth.service.CustomUserDetailsService;
 import product.demo.shop.healthcheck.HealthCheckController;
 
@@ -16,10 +20,14 @@ import static product.demo.shop.domain.auth.controller.AuthController.AUTH_API_P
 
 @Configuration
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
+
+    private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,19 +48,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(AUTH_API_PATH + "/verify/{userInfoId}/{tokenValue}")
                 .permitAll()
-                .antMatchers(CommonController.DEFAULT_PATH)
-                .hasAnyRole("USER")
+                .antMatchers("/login")
+                .permitAll()
+//                .antMatchers(CommonController.DEFAULT_PATH)
+//                .hasAnyRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
-                .permitAll()
-                .and()
                 .userDetailsService(customUserDetailsService)
                 .oauth2Login()
+
                 .and()
-                .logout()
-                .permitAll()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider))
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+
                 .and()
                 .headers()
                 .addHeaderWriter(

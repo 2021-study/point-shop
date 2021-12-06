@@ -15,7 +15,7 @@ import product.demo.shop.domain.user.repository.UserRepository;
 
 import java.util.List;
 
-@Service
+@Service("userDetailsService")
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 

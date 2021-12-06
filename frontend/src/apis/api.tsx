@@ -1,29 +1,35 @@
 import axios from "axios";
+import {LoginRequest, Token} from "./interfaces";
 
-export const SESSION_ATTRIBUTE_NAME = "JSESSIONID"
+export const COMMON_HEADER_ATTRIBUTE_AUTH = "Authorization"
 
-const loginApi = (username:string, password: string) => {
-    axios.post('/login', {})
+async function loginApi(userId:string, password: string) : Promise<Token> {
+    const response = await axios.post<Token>("/login",
+        {userId:userId, password:password},)
+        // .then((response)=>{
+        //     setLocalStorage("JWT", response.data.token)
+        //     setUpToken(response.data.token)
+        // })
+
+    return response.data;
 }
 
-// const setUpAxiosInterceptors = (token: string) => {
-//     axios.interceptors.request.use(
-//         config => {
-//             if (isUserLoggedIn()) {
-//                 config.headers!!.authorization = token
-//             }
-//             return config;
-//         }
-//     )
-// }
-
-const isUserLoggedIn = ():boolean => {
-    const user = sessionStorage.getItem(SESSION_ATTRIBUTE_NAME);
-    if(user===null)
-        return false;
-
-    return true;
+const setUpToken = (token: string | null) => {
+    if(token) {
+        axios.defaults.headers.common[COMMON_HEADER_ATTRIBUTE_AUTH] = `Bearer ${token}`;
+        console.log("axois.defaults.headers : ", axios.defaults.headers);
+    } else {
+        delete axios.defaults.headers.common[COMMON_HEADER_ATTRIBUTE_AUTH]
+    }
 }
-const logoutApi = () => {
-    sessionStorage.removeItem(SESSION_ATTRIBUTE_NAME)
+
+const setLocalStorage = (key: string, value: string) => {
+    localStorage.setItem(key, JSON.stringify(value));
 }
+
+const clearLocalStorageByKey = (key: string) => {
+    localStorage.removeItem(key);
+}
+
+
+export {loginApi, setUpToken, setLocalStorage,clearLocalStorageByKey}
