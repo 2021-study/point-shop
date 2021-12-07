@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import product.demo.shop.common.converter.CryptoConverter;
 import product.demo.shop.common.entity.AuditEntity;
-import product.demo.shop.domain.auth.dto.SignupDto;
+import product.demo.shop.auth.dto.SignupDto;
 import product.demo.shop.domain.grade.entity.UserGradeEntity;
 import product.demo.shop.domain.user.entity.enums.UserStatusType;
 

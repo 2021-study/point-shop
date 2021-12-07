@@ -3,7 +3,7 @@ package product.demo.shop.domain.user.entity;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import product.demo.shop.common.entity.AuditEntity;
-import product.demo.shop.domain.auth.dto.MailValidationDto;
+import product.demo.shop.auth.dto.MailValidationDto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity

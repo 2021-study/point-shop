@@ -159,3 +159,35 @@ include::{snippets}/validation-new-user-test/response-body.adoc[]
 
 .response-fields
 include::{snippets}/validation-new-user-test/response-fields.adoc[]
+
+== 로그인 API
+[[in-house-login]]
+
+.curl-request
+include::{snippets}/in-house-login/curl-request.adoc[]
+
+.http-request
+include::{snippets}/in-house-login/http-request.adoc[]
+
+.httpie-request
+include::{snippets}/in-house-login/httpie-request.adoc[]
+
+.path-parameter
+include::{snippets}/in-house-login/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/in-house-login/http-response.adoc[]
+
+.response-body
+include::{snippets}/in-house-login/response-body.adoc[]
+
+.response-fields
+include::{snippets}/in-house-login/response-fields.adoc[]
+
+PassWord 오류 발생시
+
+.response-body
+include::{snippets}/in-house-login-password-error/response-body.adoc[]
+
+.response-fields
+include::{snippets}/in-house-login-password-error/response-fields.adoc[]
