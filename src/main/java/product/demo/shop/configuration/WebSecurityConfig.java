@@ -1,26 +1,29 @@
 package product.demo.shop.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
-import product.demo.shop.CommonController;
-import product.demo.shop.domain.auth.jwt.JwtAuthenticationEntryPoint;
-import product.demo.shop.domain.auth.jwt.TokenProvider;
-import product.demo.shop.domain.auth.service.CustomUserDetailsService;
+import product.demo.shop.jwt.JwtAuthenticationEntryPoint;
+import product.demo.shop.jwt.TokenProvider;
+import product.demo.shop.auth.service.CustomUserDetailsService;
 import product.demo.shop.healthcheck.HealthCheckController;
 
-import static product.demo.shop.domain.auth.controller.AuthController.AUTH_API_PATH;
+import static product.demo.shop.auth.controller.AuthController.AUTH_API_PATH;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -50,18 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/login")
                 .permitAll()
-//                .antMatchers(CommonController.DEFAULT_PATH)
-//                .hasAnyRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
-                .userDetailsService(customUserDetailsService)
                 .oauth2Login()
-
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider))
                 .and()
@@ -77,6 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
     }
 
+    @Bean
+    @Primary
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         // https://blog.devbong.com/95
         var provider = new DaoAuthenticationProvider();

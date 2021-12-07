@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import product.demo.shop.common.exception.CommonErrorCode;
 import product.demo.shop.common.exception.CommonErrorResponse;
 import product.demo.shop.common.exception.CommonException;
-import product.demo.shop.domain.auth.exception.PointShopAuthException;
+import product.demo.shop.auth.exception.PointShopAuthException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
