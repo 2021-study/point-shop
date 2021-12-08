@@ -117,3 +117,6 @@ sns.google.password=구글API_client_secret
 sns.naver.client-id=네이버API_client_id
 sns.naver.password=네이버API_client_secret
 ```
+
+## Oauth2 연동 참고
+* http://yoonbumtae.com/?p=3000
