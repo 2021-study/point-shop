@@ -191,3 +191,28 @@ include::{snippets}/in-house-login-password-error/response-body.adoc[]
 
 .response-fields
 include::{snippets}/in-house-login-password-error/response-fields.adoc[]
+
+
+== Oauth 인증 연동 API
+[[in-house-login]]
+
+.curl-request
+include::{snippets}/oauth-login-path/curl-request.adoc[]
+
+.http-request
+include::{snippets}/oauth-login-path/http-request.adoc[]
+
+.httpie-request
+include::{snippets}/oauth-login-path/httpie-request.adoc[]
+
+.path-parameter
+include::{snippets}/oauth-login-path/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/oauth-login-path/http-response.adoc[]
+
+.response-body
+include::{snippets}/oauth-login-path/response-body.adoc[]
+
+.response-fields
+include::{snippets}/oauth-login-path/response-fields.adoc[]

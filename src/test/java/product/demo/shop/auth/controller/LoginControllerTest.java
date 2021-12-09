@@ -249,4 +249,37 @@ public class LoginControllerTest {
                                                 .type(JsonFieldType.STRING)
                                                 .description("에러 메시지"))));
     }
+
+    @Test
+    public void oauth2AuthPathTest() throws Exception {
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/oauth-login")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.oauthAuthPath").exists())
+                .andExpect(jsonPath("$.oauthClientInfoList").exists())
+                .andExpect(jsonPath("$.oauthClientInfoList.length()").value(2))
+                .andDo(
+                        // Documentation
+                        document(
+                                "oauth-login-path",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                PayloadDocumentation.responseFields(
+                                        PayloadDocumentation.fieldWithPath("oauthAuthPath")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Oauth 인증 화면 전환을 위한 Endpoint"),
+                                        PayloadDocumentation.fieldWithPath("oauthClientInfoList")
+                                                .type(JsonFieldType.ARRAY)
+                                                .description("Oauth Provider List"),
+                                        PayloadDocumentation.fieldWithPath(
+                                                        "oauthClientInfoList[].clientId")
+                                                .type(JsonFieldType.STRING)
+                                                .description("Oauth 인증 기관 ID"),
+                                        PayloadDocumentation.fieldWithPath(
+                                                        "oauthClientInfoList[].redirectUri")
+                                                .type(JsonFieldType.STRING)
+                                                .description("redirect-url"))));
+    }
 }
