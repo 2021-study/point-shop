@@ -1,4 +1,4 @@
-package product.demo.shop.domain.user.grade.repository;
+package product.demo.shop.domain.grade.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,13 +19,12 @@ import product.demo.shop.common.entity.AccountAuditAware;
 import product.demo.shop.configuration.DataBaseConfiguration;
 import product.demo.shop.configuration.QuerydslConfig;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
-import product.demo.shop.domain.grade.repository.UserGradeRepository;
 import product.demo.shop.domain.pointpolicy.dto.GradePointPolicyManagementDto;
 import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyObject;
 import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyStatusType;
 import product.demo.shop.domain.pointpolicy.repository.CustomGradePolicyRepositoryImpl;
 import product.demo.shop.domain.pointpolicy.repository.GradePolicyRepository;
-import product.demo.shop.domain.user.grade.singleton.GradePolicySetupSingleton;
+import product.demo.shop.domain.grade.testcreator.GradePolicyTestDataCreator;
 
 import java.util.stream.Stream;
 
@@ -120,8 +119,10 @@ public class CustomGradePolicyRepositoryTest {
 
     @BeforeAll
     public void setUp() {
-        GradePolicySetupSingleton.setUpSampleData(
-                this.userGradeRepository, this.gradePolicyRepository);
+        var creator =
+                new GradePolicyTestDataCreator(
+                        this.userGradeRepository, this.gradePolicyRepository);
+        creator.setUp();
     }
 
     @ParameterizedTest(name = "{index}: {2}")
