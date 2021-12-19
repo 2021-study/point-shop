@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import product.demo.shop.common.entity.AuditEntity;
+import product.demo.shop.domain.point.aggregate.dto.UserPointResponseDetail;
 import product.demo.shop.domain.point.entity.enums.PointEventType;
 
 import javax.persistence.Column;
@@ -26,30 +27,36 @@ public class PointEventEntity extends AuditEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointEventId;
 
-    @Column
-    private long userInfoId;
+    @Column private long userInfoId;
 
     @Column
     @Enumerated(EnumType.STRING)
     private PointEventType eventType;
 
-    @Column
-    private int point;
+    @Column private int point;
 
-    @Column
-    private String code;
+    @Column private String code;
 
-    @Column
-    private String codeId;
+    @Column private String codeId;
 
-    @Column
-    private String detail;
+    @Column private String detail;
 
-    @Column
-    private LocalDateTime pointExpiredDate;
+    @Column private LocalDateTime pointExpiredDate;
 
-    public static PointEventEntity of(long userInfoId, PointEventType eventType,int point,String code,String codeId,String detail,LocalDateTime pointExpiredDate) {
-        return new PointEventEntity(null, userInfoId, eventType, point, code, codeId, detail, pointExpiredDate);
+    public static PointEventEntity of(
+            long userInfoId,
+            PointEventType eventType,
+            int point,
+            String code,
+            String codeId,
+            String detail,
+            LocalDateTime pointExpiredDate) {
+        return new PointEventEntity(
+                null, userInfoId, eventType, point, code, codeId, detail, pointExpiredDate);
     }
 
+    public UserPointResponseDetail toUserPointResponseDetail() {
+        return new UserPointResponseDetail(
+                this.pointEventId, this.eventType, this.point, this.pointExpiredDate);
+    }
 }

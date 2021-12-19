@@ -1,4 +1,4 @@
-package product.demo.shop.domain.user.grade.service;
+package product.demo.shop.domain.grade.service;
 
 import lombok.Getter;
 import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyType;

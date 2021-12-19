@@ -1,4 +1,4 @@
-package product.demo.shop.domain.user.grade.service;
+package product.demo.shop.domain.grade.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import product.demo.shop.domain.grade.entity.enums.GradeName;
 import product.demo.shop.domain.grade.repository.UserGradeRepository;
+import product.demo.shop.domain.grade.testcreator.GradePolicyTestDataCreator;
 import product.demo.shop.domain.pointpolicy.dto.GradePolicyDto;
 import product.demo.shop.domain.pointpolicy.dto.GradePolicyInputDto;
 import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyObject;
@@ -19,7 +20,6 @@ import product.demo.shop.domain.pointpolicy.entity.enums.GradePolicyType;
 import product.demo.shop.domain.pointpolicy.entity.enums.MeasurementType;
 import product.demo.shop.domain.pointpolicy.repository.GradePolicyRepository;
 import product.demo.shop.domain.pointpolicy.service.GradePointPolicyProcessService;
-import product.demo.shop.domain.user.grade.singleton.GradePolicySetupSingleton;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,8 +44,10 @@ public class GradePointPolicyProcessServiceTest {
 
     @BeforeAll
     public void setUp() {
-        GradePolicySetupSingleton.setUpSampleData(
-                this.userGradeRepository, this.gradePolicyRepository);
+        var creator =
+                new GradePolicyTestDataCreator(
+                        this.userGradeRepository, this.gradePolicyRepository);
+        creator.setUp();
     }
 
     static Stream<Arguments> generateGradePoliciesAppliedTestParams() throws Exception {
