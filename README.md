@@ -29,10 +29,10 @@
 * Google Coding Convention 을 참고한다 ( 링크 : [Google Coding Convention](https://google.github.io/styleguide/javaguide.html))
 * **[intelliJ에 Google Coding Format 적용하기](https://github.com/2021-study/point-shop/wiki/IntelliJ-Google-Code-Style-%EC%A0%81%EC%9A%A9-%EB%B0%A9%EB%B2%95)**
 
-## 슬랙
+## Spring Restdoc
 
-* Webhok 기능을 통한 연동
-
+> mvn clean -> install -> boot run
+> http://localhost:8077/rest-docs/index.html
 
 ## Docker
 
