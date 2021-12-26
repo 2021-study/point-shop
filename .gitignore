@@ -38,3 +38,6 @@ logs\
 !**/src/main/resources/email.properties
 /src/main/resources/email.properties
 /src/main/resources/sns.properties
+
+!**/node_modules
+!**/package-lock.json
