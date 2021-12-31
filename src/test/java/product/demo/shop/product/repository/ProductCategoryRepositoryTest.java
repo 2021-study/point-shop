@@ -1,5 +1,7 @@
 package product.demo.shop.product.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.context.annotation.FilterType.ASSIGNABLE_TYPE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,8 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -22,9 +22,7 @@ import product.demo.shop.common.entity.AccountAuditAware;
 import product.demo.shop.configuration.DataBaseConfiguration;
 import product.demo.shop.configuration.ObjectMapperConfig;
 import product.demo.shop.configuration.QuerydslConfig;
-import product.demo.shop.domain.grade.testcreator.GradePolicyTestDataCreator;
 import product.demo.shop.domain.grade.testcreator.ProductCategoryCreator;
-import product.demo.shop.domain.product.dto.query.ProductCategoryQueryDto;
 import product.demo.shop.domain.product.repository.ProductCategoryRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -56,18 +54,18 @@ public class ProductCategoryRepositoryTest {
     @Test
     @DisplayName("categoryId로 카테고리 1건이 조회도어야 한다.")
     public void findCategorybyCategoryId() throws JsonProcessingException {
-        var result =
-                this.productCategoryRepository.findProductCategory(1L, null);
+        var result = this.productCategoryRepository.findProductCategory(1L, null);
 
+        assertNotNull(result);
         log.info(objectMapper.writeValueAsString(result));
     }
 
     @Test
     @DisplayName("categoryName으로 카테고리 1건이 조회되어야 한다.")
     public void findCategoryByCategoryName() throws JsonProcessingException {
-        var result =
-                this.productCategoryRepository.findProductCategory(null,"농산물");
+        var result = this.productCategoryRepository.findProductCategory(null, "농산물");
 
+        assertNotNull(result);
         log.info(objectMapper.writeValueAsString(result));
     }
 
@@ -75,9 +73,10 @@ public class ProductCategoryRepositoryTest {
     @DisplayName("대분류/중분류/소분류 모두가 같이 조회되어야 한다.")
     public void findAllCategories() throws JsonProcessingException {
         var page = PageRequest.of(0, 5);
-        var result = this.productCategoryRepository.findAllProductCategories(5L, null, page);
+        var result = this.productCategoryRepository.findAllProductCategories(1L, null, null, page);
 
         log.info(">>> result size : " + result.getTotalElements());
         log.info(objectMapper.writeValueAsString(result));
+        assertEquals(2, result.getTotalElements());
     }
 }

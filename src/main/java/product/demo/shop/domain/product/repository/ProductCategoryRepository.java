@@ -16,25 +16,40 @@ public interface ProductCategoryRepository
     // 그냥 대분류는 대분류 대로, 중분류는 중분류대로, 소분류는 소분류 대로 조회를 하는게...
     // TODO : Query 정합성 문제
     @Query(value = """
-    SELECT
-         t1.parent as bigProductCategoryId,
-         (SELECT
-            product_category_name
-     	 FROM tb_product_category
-          WHERE product_category_id = t1.parent
-         ) as bigCategoryName,
-         t2.parent as middleProductCategoryId,
-     	 t1.product_category_name as middleCategoryName,
-         t2.product_category_id as smallProductCategoryId,
-         t2.product_category_name as smallProductCategoryName
-     FROM
-         tb_product_category as t1
-             INNER JOIN
-         tb_product_category as t2 ON (t1.product_category_id = t2.parent)
+        SELECT
+            bmt.b_product_category_id as bigProductCategoryId,
+            bmt.b_parent as bigParent,
+            bmt.b_product_category_name as bigCategoryName,
+            bmt.m_product_category_id as middleProductCategoryId,
+            bmt.m_parent as middleParent,
+            bmt.m_product_category_name as middleProductCategoryName,
+            st.product_category_id as smallProductCategoryId,
+            st.parent as smallParent,
+            st.product_category_name as smallProductCategoryName
+        FROM
+            tb_product_category st
+                RIGHT JOIN
+            (SELECT
+                mt.product_category_id AS m_product_category_id,
+                    mt.parent AS m_parent,
+                    mt.product_category_name AS m_product_category_name,
+                    bt.product_category_id AS b_product_category_id,
+                    bt.parent AS b_parent,
+                    bt.product_category_name AS b_product_category_name
+            FROM
+                tb_product_category mt, (SELECT
+                bt.product_category_id, bt.parent, bt.product_category_name
+            FROM
+                tb_product_category bt
+            WHERE
+                bt.parent = bt.product_category_id) bt
+            WHERE
+                bt.product_category_id = mt.parent
+                    AND bt.product_category_id = COALESCE(?1, bt.product_category_id)
+                    AND mt.product_category_id = COALESCE(?2, mt.product_category_id)
+                    AND mt.product_category_id <> mt.parent) bmt ON bmt.m_product_category_id = st.parent
         WHERE
-            t2.product_category_id = COALESCE(?1, t2.product_category_id)
-        OR
-            t2.product_category_name = COALESCE(?2,t2.product_category_name)
+            st.product_category_id = COALESCE(?3, st.product_category_id)
         """,
             countQuery = """
                 SELECT
@@ -43,12 +58,15 @@ public interface ProductCategoryRepository
                     tb_product_category
                 WHERE
                     product_category_id = COALESCE(?1, product_category_id)
-                 OR
-                    product_category_name = COALESCE(?2, product_category_name)
+                 AND
+                    product_category_id = COALESCE(?2, product_category_id)
+                 AND
+                    product_category_id = COALESCE(?3, product_category_id)
             """,
             nativeQuery = true)
     Page<MultipleCategoryQueryDtoInterface> findAllProductCategories(
-            @Param("productCategoryId") Long productCategoryId,
-            @Param("productCategoryId") String productCategoryName,
+            @Param("bigCategoryId") Long bigCategoryId,
+            @Param("middleCategoryId") Long middleCategoryId,
+            @Param("smallCategoryId") Long smallCategoryId,
             Pageable pageable);
 }

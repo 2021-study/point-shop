@@ -12,10 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,7 +31,7 @@ import product.demo.shop.domain.user.repository.UserRepository;
 @SpringBootTest
 @EnableMockMvc
 @ActiveProfiles("test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+// @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TokenExceptionTest {
 
     @Autowired MockMvc mockMvc;
@@ -46,19 +44,20 @@ public class TokenExceptionTest {
 
     @Autowired private PasswordEncoder delegatingPasswordEncoder;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
-        var testUser = UserEntity.builder()
-                .userInfoId(1L)
-                .userGradeId(1L)
-                .userAccountId("test1")
-                .name("hwang")
-                .email("dlswp113@gmail.com")
-                .phone("010-0000-0000")
-                .address("사랑시고백구행복동")
-                .password(delegatingPasswordEncoder.encode("1234"))
-                .userStatus(UserStatusType.VERIFIED) // Verified된 유저만 로그인 처리.
-                .build();
+        var testUser =
+                UserEntity.builder()
+                        .userInfoId(1L)
+                        .userGradeId(1L)
+                        .userAccountId("test1")
+                        .name("hwang")
+                        .email("dlswp113@gmail.com")
+                        .phone("010-0000-0000")
+                        .address("사랑시고백구행복동")
+                        .password(delegatingPasswordEncoder.encode("1234"))
+                        .userStatus(UserStatusType.VERIFIED) // Verified된 유저만 로그인 처리.
+                        .build();
 
         userRepository.saveAndFlush(testUser);
     }
@@ -88,9 +87,7 @@ public class TokenExceptionTest {
 
         // JWT Token 검증시 무조건 만료된 토큰 결과가 나오도록 Mocking
         given(tokenProvider.validateToken(any())).willThrow(ExpiredJwtException.class);
-        mockMvc.perform(
-                        get("/api/employee/list")
-                                .header("authorization", "Bearer " + tokenDto.token()))
+        mockMvc.perform(get("/api/main").header("authorization", "Bearer " + tokenDto.token()))
                 .andDo(print())
                 .andExpect(status().isForbidden()) // 토큰 만료시 HTTP 403 Forbidden 을 리턴한다.
                 .andExpect(jsonPath(("$.errorMessage")).exists())
@@ -122,9 +119,7 @@ public class TokenExceptionTest {
 
         given(tokenProvider.validateToken(any())).willThrow(MalformedJwtException.class);
 
-        mockMvc.perform(
-                        get("/api/employee/list")
-                                .header("authorization", "Bearer " + tokenDto.token()))
+        mockMvc.perform(get("/api/main").header("authorization", "Bearer " + tokenDto.token()))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath(("$.errorMessage")).exists())
