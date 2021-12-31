@@ -21,3 +21,14 @@ services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의 ( 컴�
     volumes:
 #      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - point-shop-dbdata:/var/lib/mysql2 # -v 옵션 (다렉토리 마운트 설정)
+  point-shop-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: point-shop-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "RabbitMQ-My-Cookies"
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin"
+
